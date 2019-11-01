@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:absolute="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>登陆</title>
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="https://www.jeasyui.com/easyui/themes/icon.css">
+    <script type="text/javascript" src="https://www.jeasyui.com/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
+ 
+</head>
+<body>
+
+<div class="easyui-panel" title="用户登陆" style="width:300px;height:400px;padding:10px;"  >
+    <form id="ff" action="/user/login" method="post" enctype="multipart/form-data">
+        <table>
+            <tr style="height: 80px">
+                <td>用户名:</td>
+                <td><input name="username" class="f1 easyui-textbox"></input></td>
+            </tr>
+            <tr style="height: 80px">
+                <td>登陆名:</td>
+                <td><input name="login_name" class="f1 easyui-textbox"></input></td>
+            </tr>
+            <tr style="height: 80px">
+                <td>密码:</td>
+                <td><input name="password" class="f1 easyui-textbox"></input></td>
+            </tr>
+           
+            <tr style="height: 80px">
+                <td></td>
+                <td><input type="submit" value="登陆"></input></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<style scoped>
+    .f1 {
+        width: 200px;
+    }
+</style>
+<script type="text/javascript">
+    $(function(){
+        $('#ff').form({
+            success:function(data){
+               if (data=="success") {
+                   window.location.href='/index';
+               }else{
+                   window.location.href='/login_fail';
+               }
+            }
+        });
+    });
+</script>
+</body>
+</html>

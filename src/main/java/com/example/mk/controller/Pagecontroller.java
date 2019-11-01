@@ -8,9 +8,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 //跳转的界面  http://localhost:8080/login
 public class Pagecontroller {
 
-    @RequestMapping("/login")
-    public String page1(){
+    @RequestMapping("/index")
+    public String index(){
 
         return "index";
+    }
+
+
+
+    @RequestMapping("/login")
+    public String login(){
+
+        return "login";
+    }
+
+    @RequestMapping("/login_fail")
+    public String login_fail(){
+
+        return "404";
     }
 }

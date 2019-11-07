@@ -27,4 +27,22 @@ public class Pagecontroller {
 
         return "404";
     }
+
+    @RequestMapping("/operator")
+    public String operator(){
+
+        return "/user/operator";
+    }
+
+    @RequestMapping("/demo")
+    public String demo(){
+
+        return "/user/demo";
+    }
+
+    @RequestMapping("/demo2")
+    public String demo2(){
+
+        return "/user/demo2";
+    }
 }

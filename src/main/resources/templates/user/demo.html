@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Basic Layout - jQuery EasyUI Demo</title>
+    <!--注意jquery核心库要放在easyui核心库前面引入，不然jquery.easyui.min.js中会报错：jQuery is not defined-->
+    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
+    <script type="text/javascript" src="easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+</head>
+<body>
+
+<div id="cc" class="easyui-layout" style="width:100%;height: 100%;">
+    <!-- 顶部 -->
+    <div data-options="region:'north'" style="height:50px;overflow: hidden;border: none; text-align:right" >
+        <div class="index-head">
+            <div class="index-head-left" style=" text-align:left">
+                场库平台
+            </div>
+
+            <div class="index-head-right" style="left: 65%">
+                <label style="color:white"> </label>
+                <label style="color:red">【11】</label>
+                &nbsp;
+                <a href="javascript:void(0)" id="mb_personCenter" class="easyui-menubutton"
+                   data-options="menu:'#mm_personCenterMenu'" ><span style="color: blue;">【个人中心】</span></a>
+                <div id="mm_personCenterMenu" style="width:150px;">
+                    <div id="1" data-options="iconCls:'icon-save'">账号管理</div>
+                    <div class="menu-sep"></div>
+
+                    <!--  <div id="3" data-options="iconCls:'icon-redo'">交班</div>
+                     <div id="4" data-options="iconCls:'icon-redo'">当前概况</div>
+                      <div class="menu-sep"></div>
+                     <div id="4" data-options="iconCls:'icon-undo'">联系</div>   -->
+                    <div id="5" data-options="iconCls:'icon-help'">关于</div>
+                    <div id="6" data-options="iconCls:'icon-undo'">上传更新文件</div>
+                    <div id="7" data-options="iconCls:'icon-print'">下载系统日志</div>
+                    <!-- VXG测试功能 -->
+                    <div id="index_footer" data-options="region:'south'" style="height:23px;padding: 0px;" align="right">
+                        <a href="/webpark/vxgPlayerTest.html" src="/webpark/vxgPlayerTest.html">VXG视频功能测试</a>
+                    </div>
+                </div>
+                &nbsp;
+                <a href="/webpark/" onclick="exit()" title="注销">【注销】</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部 -->
+    <div id="index_footer" data-options="region:'south'" style="height:23px;padding: 0px;" align="right">
+        <font>©2015 北京蓝卡科技股份有限公司</font>
+    </div>
+    <!-- 左侧 -->
+    <div data-options="region:'west',collapsible:true,split:true" style="width:206px;height:500px;border:none;background:#6495ED">
+
+
+        <div class="nav-main">
+            <div class="nav-box">
+            </div>
+            <div class="nav">
+                <ul class="nav-ul">
+                    <!-- <li><a href="#" class="home"><span></span></a></li> -->
+
+                    <li id="index_li_id_0"><a href="#" class="develop"><span><img src="/webpark/img/a12_0.png" style="width:50px;height:50px" ><br>运行状态<br></span></a></li>
+
+
+                    <li id="index_li_id_1"><a href="#" class="wechat"><span><img src="/webpark/img/a12_0.png" style="width:50px;height:50px" ><br>运营统计<br></span></a></li>
+
+
+                    <li id="index_li_id_2"><a href="#" class="case"><span><img src="/webpark/img/a12_0.png" style="width:50px;height:50px" ><br>财务管理<br></span></a></li>
+
+
+                    <li id="index_li_id_3"><a href="#" class="news"><span><img src="/webpark/img/a12_0.png" style="width:50px;height:50px" ><br>车辆管理<br></span></a></li>
+
+
+                    <li id="index_li_id_4"><a href="#" class="contact"><span><img src="/webpark/img/a12_0.png" style="width:50px;height:50px" ><br>场库管理<br></span></a></li>
+
+
+                    <li id="index_li_id_5"><a href="#" class="contact"><span><img src="/webpark/img/a12_0.png" style="width:50px;height:50px" ><br>用户管理<br></span></a></li>
+
+
+                    <li id="index_li_id_6"><a href="#" class="contact"><span><img src="/webpark/img/a12_0.png" style="width:50px;height:50px" ><br>系统设置<br></span></a></li>
+
+
+
+                    <li id="index_li_id_7"><a href="#" class="contact"><span><img src="/webpark/img/a12_0.png" style="width:50px;height:50px" ><br>车位引导<br></span></a></li>
+
+
+                </ul>
+
+            </div>
+            <div class="nav-slide">
+
+
+                <!-- <div class="nav-slide-o"></div> -->
+
+                <div class="nav-slide-o">
+                    <ul>
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/a001.png" style="width:50px;height:50px" onclick="parkOpen();"><br>通道监控</span></a></li>
+
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/a002.png" style="width:50px;height:50px" onclick="toPage('中央收费','view/financialAffairs/centralChargeIndex.jsp','ck')"><br>中央收费</span></a></li>
+
+
+                    </ul>
+                </div>
+
+
+
+
+
+
+
+                <div class="nav-slide-o">
+                    <ul>
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/b001.png" style="width:50px;height:50px" onclick="toPage('原始记录','view/statistics/OriginPassRecIndex.jsp','ck')"><br>原始记录</span></a></li>
+
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/b002.png" style="width:50px;height:50px" onclick="toPage('数据分析','view/dataAnalyze/dataAnalyzeIndex.jsp','ck')"><br>数据分析</span></a></li>
+
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/b003.png" style="width:50px;height:50px" onclick="toPage('出场记录','view/statistics/outRecordIndex.jsp','ck')"><br>出场记录</span></a></li>
+
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/b004.png" style="width:50px;height:50px" onclick="toPage('汇总报表','view/financialAffairs/centralChargeStatIndex.jsp','ck')"><br>汇总报表</span></a></li>
+
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/b005.png" style="width:50px;height:50px" onclick="toPage('订单查询','view/statistics/orderRecordIndex.jsp','ck')"><br>订单查询</span></a></li>
+
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/b006.png" style="width:50px;height:50px" onclick="toPage('日志查询','view/log/logIndex.jsp','ck')"><br>日志查询</span></a></li>
+
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/b007.png" style="width:50px;height:50px" onclick="toPage('交班报表','view/chargecomputer/chargeComputerReport.jsp','ck')"><br>交班报表</span></a></li>
+
+                    </ul>
+
+                </div>
+
+                <div class="nav-slide-o">
+                    <ul>
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/c001.png" style="width:50px;height:50px" onclick="toPage('有效期续费','view/renewal/parkingRenewalIndex.jsp','ck')"><br>有效期续费</span></a></li>
+
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/c002.png" style="width:50px;height:50px" onclick="toPage('有效期续费统计','view/renewal/parkingRenewalRecordIndex.jsp','ck')"><br>有效期续费统计</span></a></li>
+
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/c003.png" style="width:50px;height:50px" onclick="toPage('储值用户充值','view/renewal/balanceIndex.jsp','ck')"><br>储值用户充值</span></a></li>
+
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/c004.png" style="width:50px;height:50px" onclick="toPage('充值统计','view/renewal/balanceRecordIndex.jsp','ck')"><br>充值统计</span></a></li>
+
+                    </ul>
+                </div>
+
+                <div class="nav-slide-o">
+                    <ul>
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/d001.png" style="width:50px;height:50px" onclick="toPage('车位管理','view/carmanager/carPlaceIndex.jsp','ck')"><br>车位管理</span></a></li>
+
+
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/d002.png" style="width:50px;height:50px" onclick="toPage('车牌管理','view/carmanager/plateManagementIndex.jsp','ck')"><br>车牌管理</span></a></li>
+
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/d003.png" style="width:50px;height:50px" onclick="toPage('黑名单','view/blackplate/blackPlateIndex.jsp','ck')"><br>黑名单</span></a></li>
+
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/d004.png" style="width:50px;height:50px" onclick="toPage('预约管理','view/bookingCar/bookingCarIndex.jsp','ck')"><br>预约管理</span></a></li>
+
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/d005.png" style="width:50px;height:50px" onclick="toPage('固定车车牌纠正','view/modifyPlate/modifyPlateIndex.jsp','ck')"><br>固定车车牌纠正</span></a></li>
+
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/d005.png" style="width:50px;height:50px" onclick="toPage('临时车牌+车型','view/tempCarPlate/tempCarPlateIndex.jsp','ck')"><br>临时车牌+车型</span></a></li>
+
+
+                    </ul>
+                </div>
+
+                <div class="nav-slide-o">
+                    <ul>
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/e001.png" style="width:50px;height:50px" onclick="toPage('区域管理','view/park/parkIndex.jsp','ck')"><br>区域管理</span></a></li>
+
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/e002.png" style="width:50px;height:50px" onclick="toPage('通道管理','view/passage/passageIndex.jsp','ck')"><br>通道管理</span></a></li>
+
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/e003.png" style="width:50px;height:50px" onclick="toPage('收费方案设置','view/parkChargeSet/parkChargeSetIndex.jsp','ck')"><br>收费方案设置</span></a></li>
+
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/e004.png" style="width:50px;height:50px" onclick="toPage('显示风格设置','view/displayStyle/displayIndex.jsp','ck')"><br>显示风格设置</span></a></li>
+
+                    </ul>
+                </div>
+
+                <div class="nav-slide-o">
+                    <ul>
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/f001.png" style="width:50px;height:50px" onclick="toPage('角色','view/role/roleIndex.jsp','ck')"><br>角色</span></a></li>
+
+
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/f002.png" style="width:50px;height:50px" onclick="toPage('操作员','view/operator/operatorIndex.jsp','ck')"><br>操作员</span></a></li>
+
+                    </ul>
+                </div>
+
+                <div class="nav-slide-o">
+                    <ul>
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/g001.png" style="width:50px;height:50px" onclick="toPage('基本信息设置','view/systemset/systemSetIndex.jsp','ck')"><br>基本信息设置</span></a></li>
+
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/g002.png" style="width:50px;height:50px" onclick="toPage('配置项设置','view/configurationset/configurationSetIndex.jsp','ck')"><br>配置项设置</span></a></li>
+
+                    </ul>
+                </div>
+
+
+                <div class="nav-slide-o">
+                    <ul>
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/g001.png" style="width:50px;height:50px" onclick="toPage('监控中心','view/parkingGuidanceSystem/monitor.jsp','ck')"><br>监控中心</span></a></li>
+
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/g002.png" style="width:50px;height:50px" onclick="toPage('报表统计','view/parkingGuidanceSystem/report.jsp','ck')"><br>报表统计</span></a></li>
+
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/g002.png" style="width:50px;height:50px" onclick="toPage('设备管理','view/parkingGuidanceSystem/deviceManager.jsp','ck')"><br>设备管理</span></a></li>
+
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/g001.png" style="width:50px;height:50px" onclick="toPage('位置设置','view/parkingGuidanceSystem/parkingSetUp.jsp','ck')"><br>位置设置</span></a></li>
+
+
+
+                        <li><a href="#"><span><img src="/webpark/images/leftPic/g001.png" style="width:50px;height:50px" onclick="toPage('行车道设置','view/parkingGuidanceSystem/roadSet.jsp','ck')"><br>行车道设置</span></a></li>
+
+                    </ul>
+                </div>
+
+
+
+
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+
+    <!-- 右侧 -->
+    <div id="center" data-options="region:'center'">
+        <div id="centertab" class="easyui-tabs" data-options="tabHeight:25,border:false,fit:true">
+            <!-- 首页选项卡 -->
+            <div title="首页" style="">
+                <img id="index_main" src="" width="100%" height="100%"></img>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div id="modifyUserWinInit" title="编辑账号">
+    <div id="modifyUserWindow" style="display:none">
+        <table cellpadding="5" align="center">
+            <tr>
+                <td>登录名称:</td>
+                <td><input class="easyui-textbox" type="text" id="mod_userLoginName" style="width:200px" name="mod_userLoginName"></input></td>
+            </tr>
+            <tr>
+                <td>请输入原始密码:</td>
+                <td><input class="easyui-textbox" type="password" id="old_userPassword" style="width:200px" name="old_userPassword"></input></td>
+            </tr>
+            <tr>
+                <td>请输入新建密码:</td>
+                <td><input class="easyui-textbox" type="password" id="mod_userPassword" style="width:200px" name="mod_userPassword"></input></td>
+            </tr>
+            <tr>
+                <td>请再次输入密码:</td>
+                <td><input class="easyui-textbox" type="password" id="mod_userPassword1" style="width:200px" name="mod_userPassword1"></input></td>
+            </tr>
+        </table>
+        <div style="text-align:center;padding:20px">
+            <a onclick="modifyUser()" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'">确定</a>
+        </div>
+    </div>
+</div>
+<!--上传脚本文件的window  -->
+<div class="easyui-window"  id="win_import" title="文件上传" data-options="iconCls:'icon-save',modal:true,closed:true,left:300,top:200,width:400,height:200,maximizable:false,minimizable:false" >
+    <a>上传目的地址:</a><input id="impUrl" class="easyui-textbox" style="width:280px"><br>
+    <a>选择文件:</a><input id="fileName" name="fileName" type="file"><input id="impDr" type="button" value="导入" onclick="importFile()">
+
+</div>
+<!-- 上传脚本输密码的window -->
+<div class="easyui-window"  id="win_imp_pas" title="文件上传" data-options="modal:true,closed:true,collapsible:false,minimizable:false,maximizable:false,left:120,top:200,width:600,height:150" >
+    <table class="small"  align="left" width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
+        <tr>
+            <td class="tbHead" style="width:10%">密码：</td>
+            <td class="tbText" style="width:40%" ><input type="text" name="imp_password" id="imp_password"  class="easyui-textbox"  data-options="required:true,width:'200px',missingMessage:'请输入密码'" value="" >
+
+            </td>
+
+        </tr>
+        <tr>
+            <td class="tbCenter" colspan="2" >
+                <span style="color:red">需要输入特定密码，如有疑问请联系管理员！！！</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="tbCenter" colspan="2" >
+                <a href="javascript:void(0)" id="cog_delete_group" class="easyui-linkbutton" onclick="showImp()">确定</a>
+                &nbsp;&nbsp;
+                <a href="javascript:void(0)" id="cog_close_group" class="easyui-linkbutton" onclick="closeImp()">关闭</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<!--软件版本号的window  -->
+<div class="easyui-window"  id="win_bcversion" title="关于AI云无人值守停车场管理系统" data-options="iconCls:'icon-save',modal:true,closed:true,left:300,top:200,width:500,height:200" >
+    <table class="small"  id="tb_print_CouponCode" align="left" width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
+        <tr>
+            <td class="td_left"  >
+                <b>版本号：</b>2019-10-12 10:31:54
+            </td>
+        </tr>
+
+    </table>
+
+</div>
+<div class="easyui-window"  id="win_zip_progress" title="打包进度" data-options="iconCls:'icon-save',modal:true,closed:true,left:300,top:200,width:500,height:200" >
+    <div style="font-size:20px">webpark.sql进度:<span id="zip_percent_sql" style="color:red;font-size: 20px"></span></div>
+    <div style="font-size:20px">打包进度:<span id="zip_percent" style="color:red;font-size: 20px"></span></div>
+    <div id="zip_progress" class="easyui-progressbar" style=""></div>
+</div>
+</body>
+</html>

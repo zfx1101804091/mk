@@ -28,6 +28,13 @@ public class Pagecontroller {
         return "404";
     }
 
+
+    @RequestMapping("/ztree")
+    public String ztree(){
+
+        return "backstage";
+    }
+
     @RequestMapping("/operator")
     public String operator(){
 

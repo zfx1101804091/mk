@@ -8,5 +8,5 @@ import com.example.mk.bean.User;
  * @time: 2019/11/1 0001 22:34
  */
 public interface UserService {
-    User queryName(String username, String login_name, String password);
+    User queryName(String login_name, String password,String code);
 }

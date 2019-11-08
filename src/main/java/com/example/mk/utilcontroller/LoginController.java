@@ -23,21 +23,17 @@ public class LoginController {
     private UserService userService;
     
     @RequestMapping("/login")
-    @ResponseBody
     public String login(HttpServletRequest request){
-        String username = request.getParameter("username");
         String login_name = request.getParameter("login_name");
         String password = request.getParameter("password");
-        User users = userService.queryName(username,login_name,password);
+        String code = request.getParameter("code");
+        User users = userService.queryName(login_name,password,code);
         
         if (users!=null){
-            return "success";
+            return "redirect:/index ";
         }
-        return "fail";
+        return "redirect:/login_fail ";
     }
 
-    @RequestMapping("/lgback")
-    public String lgback(HttpServletRequest request){
-       return "login";
-    }
+
 }

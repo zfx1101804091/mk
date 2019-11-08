@@ -5,7 +5,7 @@
     
     <select id="queryUser" parameterType="java.lang.String" resultType="com.example.mk.bean.User">
         
-        select * from user where username=#{username} and login_name=#{login_name} and password=#{password}
+        select * from user where login_name=#{login_name} and password=#{password} and code=#{code}
     </select>
     
 

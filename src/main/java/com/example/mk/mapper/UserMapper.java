@@ -5,5 +5,5 @@ import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
 
-    User queryUser(@Param("username") String username, @Param("login_name")String login_name, @Param("password")String password);
+    User queryUser(@Param("login_name")String login_name, @Param("password")String password,@Param("code") String code );
 }

@@ -17,9 +17,9 @@ public class UserServiceimpl implements UserService {
     @Autowired
     private UserMapper userMapper;
     @Override
-    public User queryName(String username, String login_name, String password) {
+    public User queryName( String login_name, String password,String code) {
         
-        User users = userMapper.queryUser(username,login_name,password);
+        User users = userMapper.queryUser(login_name,password,code);
         return users;
     }
 }

@@ -9,7 +9,6 @@
     echarts_6();
 
 
-
     /*关于几个配置项的解释：
     title：图片的名称
     legend：图例组件，可以通过点击图例控制哪些系列不显示
@@ -19,34 +18,32 @@
     */
 
 
-
-
     function echarts_1() {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echart1'));
 
         //使用ajax请求动态赋值x，y周值
         $.ajax({
-            url:"/test/query_all",
-            type:"post",
+            url: "/test/query_all",
+            type: "post",
             //data:"CODE"+oneS,
-            dataType:"text",
-            async:false,
-            success:function yan(data) {
+            dataType: "text",
+            async: false,
+            success: function yan(data) {
                 //alert(data);
                 // alert("echart");
-                if (data==0){
+                if (data == 0) {
                     // echarts_1(data);
                     // echarts_2(data);
                     alert("获取数据失败");
-                }else {
+                } else {
                     console.log(data)
-                    var ls =eval('('+data+')');
+                    var ls = eval('(' + data + ')');
 
                     var listx = [];//创建x轴集合 填装数据
                     var listy = [];//创建y轴集合 填装数据
 
-                    for(var e in ls){
+                    for (var e in ls) {
                         //ls[e]就是单个json数据，类似 {"id":1,"longS":12,"nameS":"商超门店","valueS":1200}
                         //console.log(ls[e]);
                         var jsons = ls[e];
@@ -70,7 +67,7 @@
                         },
                         grid: {
                             left: '0%',
-                            top:'10px',
+                            top: '10px',
                             right: '0%',
                             bottom: '4%',
                             containLabel: true
@@ -90,7 +87,7 @@
                             axisTick: {
                                 show: false,
                             },
-                            axisLabel:  {
+                            axisLabel: {
                                 interval: 0,
                                 // rotate:50,
                                 show: true,
@@ -105,7 +102,7 @@
                             type: 'value',
                             axisLabel: {
                                 //formatter: '{value} %'
-                                show:true,
+                                show: true,
                                 textStyle: {
                                     color: "rgba(255,255,255,.6)",
                                     fontSize: '12',
@@ -133,11 +130,11 @@
                                 type: 'bar',
                                 //data: [200, 300, 300, 900, 1500, 1200, 600],
                                 data: listy,
-                                barWidth:'35%', //柱子宽度
+                                barWidth: '35%', //柱子宽度
                                 // barGap: 1, //柱子之间间距
                                 itemStyle: {
                                     normal: {
-                                        color:'#2f89cf',
+                                        color: '#2f89cf',
                                         opacity: 1,
                                         barBorderRadius: 5,
                                     }
@@ -153,14 +150,14 @@
             }
 
 
-
         });
 
 
-        window.addEventListener("resize",function(){
+        window.addEventListener("resize", function () {
             myChart.resize();
         });
     }
+
     function echarts_2() {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echart2'));
@@ -169,11 +166,11 @@
             //  backgroundColor: '#00265f',
             tooltip: {
                 trigger: 'axis',
-                axisPointer: { type: 'shadow'}
+                axisPointer: {type: 'shadow'}
             },
             grid: {
                 left: '0%',
-                top:'10px',
+                top: '10px',
                 right: '0%',
                 bottom: '4%',
                 containLabel: true
@@ -193,7 +190,7 @@
                 axisTick: {
                     show: false,
                 },
-                axisLabel:  {
+                axisLabel: {
                     interval: 0,
                     // rotate:50,
                     show: true,
@@ -208,7 +205,7 @@
                 type: 'value',
                 axisLabel: {
                     //formatter: '{value} %'
-                    show:true,
+                    show: true,
                     textStyle: {
                         color: "rgba(255,255,255,.6)",
                         fontSize: '12',
@@ -236,11 +233,11 @@
 
                     type: 'bar',
                     data: [1500, 1200, 600, 200, 300, 300, 900],
-                    barWidth:'35%', //柱子宽度
+                    barWidth: '35%', //柱子宽度
                     // barGap: 1, //柱子之间间距
                     itemStyle: {
                         normal: {
-                            color:'#27d08a',
+                            color: '#27d08a',
                             opacity: 1,
                             barBorderRadius: 5,
                         }
@@ -252,10 +249,11 @@
 
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
-        window.addEventListener("resize",function(){
+        window.addEventListener("resize", function () {
             myChart.resize();
         });
     }
+
     function echarts_5() {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echart5'));
@@ -271,7 +269,7 @@
 
             grid: {
                 left: '0%',
-                top:'10px',
+                top: '10px',
                 right: '0%',
                 bottom: '2%',
                 containLabel: true
@@ -291,7 +289,7 @@
                 axisTick: {
                     show: false,
                 },
-                axisLabel:  {
+                axisLabel: {
                     interval: 0,
                     // rotate:50,
                     show: true,
@@ -306,7 +304,7 @@
                 type: 'value',
                 axisLabel: {
                     //formatter: '{value} %'
-                    show:true,
+                    show: true,
                     textStyle: {
                         color: "rgba(255,255,255,.6)",
                         fontSize: '12',
@@ -332,11 +330,11 @@
             series: [{
                 type: 'bar',
                 data: [2, 3, 3, 9, 15, 12, 6, 4, 6, 7, 4, 10],
-                barWidth:'35%', //柱子宽度
+                barWidth: '35%', //柱子宽度
                 // barGap: 1, //柱子之间间距
                 itemStyle: {
                     normal: {
-                        color:'#2f89cf',
+                        color: '#2f89cf',
                         opacity: 1,
                         barBorderRadius: 5,
                     }
@@ -347,7 +345,7 @@
 
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
-        window.addEventListener("resize",function(){
+        window.addEventListener("resize", function () {
             myChart.resize();
         });
     }
@@ -366,11 +364,11 @@
                 }
             },
             legend: {
-                top:'0%',
-                data:['安卓','IOS'],
+                top: '0%',
+                data: ['安卓', 'IOS'],
                 textStyle: {
                     color: 'rgba(255,255,255,.5)',
-                    fontSize:'12',
+                    fontSize: '12',
                 }
             },
             grid: {
@@ -384,10 +382,10 @@
             xAxis: [{
                 type: 'category',
                 boundaryGap: false,
-                axisLabel:  {
+                axisLabel: {
                     textStyle: {
                         color: "rgba(255,255,255,.6)",
-                        fontSize:12,
+                        fontSize: 12,
                     },
                 },
                 axisLine: {
@@ -402,10 +400,9 @@
             }, {
 
                 axisPointer: {show: false},
-                axisLine: {  show: false},
+                axisLine: {show: false},
                 position: 'bottom',
                 offset: 20,
-
 
 
             }],
@@ -418,10 +415,10 @@
                         color: 'rgba(255,255,255,.1)'
                     }
                 },
-                axisLabel:  {
+                axisLabel: {
                     textStyle: {
                         color: "rgba(255,255,255,.6)",
-                        fontSize:12,
+                        fontSize: 12,
                     },
                 },
 
@@ -465,7 +462,7 @@
                             borderWidth: 12
                         }
                     },
-                    data: [3, 4, 3, 4, 3, 4, 3, 6, 2, 4, 2, 4,3, 4, 3, 4, 3, 4, 3, 6, 2, 4, 2, 4]
+                    data: [3, 4, 3, 4, 3, 4, 3, 6, 2, 4, 2, 4, 3, 4, 3, 4, 3, 4, 3, 6, 2, 4, 2, 4]
 
                 },
                 {
@@ -511,10 +508,11 @@
 
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
-        window.addEventListener("resize",function(){
+        window.addEventListener("resize", function () {
             myChart.resize();
         });
     }
+
     function echarts_6() {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('echart6'));
@@ -649,15 +647,16 @@
                         tooltip: {show: false},
                         itemStyle: placeHolderStyle
                     }]
-                }, ]
+                },]
         };
 
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
-        window.addEventListener("resize",function(){
+        window.addEventListener("resize", function () {
             myChart.resize();
         });
     }
+
     function echarts_31() {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('fb1'));
@@ -668,43 +667,43 @@
                 left: 'center',
                 textStyle: {
                     color: '#fff',
-                    fontSize:'16'
+                    fontSize: '16'
                 }
 
             }],
             tooltip: {
                 trigger: 'item',
                 formatter: "{a} <br/>{b}: {c} ({d}%)",
-                position:function(p){   //其中p为当前鼠标的位置
+                position: function (p) {   //其中p为当前鼠标的位置
                     return [p[0] + 10, p[1] - 10];
                 }
             },
             legend: {
 
-                top:'70%',
+                top: '70%',
                 itemWidth: 10,
                 itemHeight: 10,
-                data:['0岁以下','20-29岁','30-39岁','40-49岁','50岁以上'],
+                data: ['0岁以下', '20-29岁', '30-39岁', '40-49岁', '50岁以上'],
                 textStyle: {
                     color: 'rgba(255,255,255,.5)',
-                    fontSize:'12',
+                    fontSize: '12',
                 }
             },
             series: [
                 {
-                    name:'年龄分布',
-                    type:'pie',
+                    name: '年龄分布',
+                    type: 'pie',
                     center: ['50%', '42%'],
                     radius: ['40%', '60%'],
-                    color: ['#065aab', '#066eab', '#0682ab', '#0696ab', '#06a0ab','#06b4ab','#06c8ab','#06dcab','#06f0ab'],
-                    label: {show:false},
-                    labelLine: {show:false},
-                    data:[
-                        {value:1, name:'0岁以下'},
-                        {value:4, name:'20-29岁'},
-                        {value:2, name:'30-39岁'},
-                        {value:2, name:'40-49岁'},
-                        {value:1, name:'50岁以上'},
+                    color: ['#065aab', '#066eab', '#0682ab', '#0696ab', '#06a0ab', '#06b4ab', '#06c8ab', '#06dcab', '#06f0ab'],
+                    label: {show: false},
+                    labelLine: {show: false},
+                    data: [
+                        {value: 1, name: '0岁以下'},
+                        {value: 4, name: '20-29岁'},
+                        {value: 2, name: '30-39岁'},
+                        {value: 2, name: '40-49岁'},
+                        {value: 1, name: '50岁以上'},
                     ]
                 }
             ]
@@ -712,10 +711,11 @@
 
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
-        window.addEventListener("resize",function(){
+        window.addEventListener("resize", function () {
             myChart.resize();
         });
     }
+
     function echarts_32() {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('fb2'));
@@ -726,44 +726,44 @@
                 left: 'center',
                 textStyle: {
                     color: '#fff',
-                    fontSize:'16'
+                    fontSize: '16'
                 }
 
             }],
             tooltip: {
                 trigger: 'item',
                 formatter: "{a} <br/>{b}: {c} ({d}%)",
-                position:function(p){   //其中p为当前鼠标的位置
+                position: function (p) {   //其中p为当前鼠标的位置
                     return [p[0] + 10, p[1] - 10];
                 }
             },
             legend: {
 
-                top:'70%',
+                top: '70%',
                 itemWidth: 10,
                 itemHeight: 10,
-                data:['电子商务','教育','IT/互联网','金融','学生','其他'],
+                data: ['电子商务', '教育', 'IT/互联网', '金融', '学生', '其他'],
                 textStyle: {
                     color: 'rgba(255,255,255,.5)',
-                    fontSize:'12',
+                    fontSize: '12',
                 }
             },
             series: [
                 {
-                    name:'年龄分布',
-                    type:'pie',
+                    name: '年龄分布',
+                    type: 'pie',
                     center: ['50%', '42%'],
                     radius: ['40%', '60%'],
-                    color: ['#065aab', '#066eab', '#0682ab', '#0696ab', '#06a0ab','#06b4ab','#06c8ab','#06dcab','#06f0ab'],
-                    label: {show:false},
-                    labelLine: {show:false},
-                    data:[
-                        {value:5, name:'电子商务'},
-                        {value:1, name:'教育'},
-                        {value:6, name:'IT/互联网'},
-                        {value:2, name:'金融'},
-                        {value:1, name:'学生'},
-                        {value:1, name:'其他'},
+                    color: ['#065aab', '#066eab', '#0682ab', '#0696ab', '#06a0ab', '#06b4ab', '#06c8ab', '#06dcab', '#06f0ab'],
+                    label: {show: false},
+                    labelLine: {show: false},
+                    data: [
+                        {value: 5, name: '电子商务'},
+                        {value: 1, name: '教育'},
+                        {value: 6, name: 'IT/互联网'},
+                        {value: 2, name: '金融'},
+                        {value: 1, name: '学生'},
+                        {value: 1, name: '其他'},
                     ]
                 }
             ]
@@ -771,69 +771,106 @@
 
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
-        window.addEventListener("resize",function(){
+        window.addEventListener("resize", function () {
             myChart.resize();
         });
     }
+
     function echarts_33() {
+
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('fb3'));
-        option = {
-            title: [{
-                text: '兴趣分布',
-                left: 'center',
-                textStyle: {
-                    color: '#fff',
-                    fontSize:'16'
-                }
 
-            }],
-            tooltip: {
-                trigger: 'item',
-                formatter: "{a} <br/>{b}: {c} ({d}%)",
-                position:function(p){   //其中p为当前鼠标的位置
-                    return [p[0] + 10, p[1] - 10];
-                }
-            },
-            legend: {
-                top:'70%',
-                itemWidth: 10,
-                itemHeight: 10,
-                data:['汽车','旅游','财经','教育','软件','其他'],
-                textStyle: {
-                    color: 'rgba(255,255,255,.5)',
-                    fontSize:'12',
-                }
-            },
-            series: [
-                {
-                    name:'兴趣分布',
-                    type:'pie',
-                    center: ['50%', '42%'],
-                    radius: ['40%', '60%'],
-                    color: ['#065aab', '#066eab', '#0682ab', '#0696ab', '#06a0ab','#06b4ab','#06c8ab','#06dcab','#06f0ab'],
-                    label: {show:false},
-                    labelLine: {show:false},
-                    data:[
-                        {value:2, name:'汽车'},
-                        {value:3, name:'旅游'},
-                        {value:1, name:'财经'},
-                        {value:4, name:'教育'},
-                        {value:8, name:'软件'},
-                        {value:1, name:'其他'},
-                    ]
-                }
-            ]
-        };
+        //使用ajax请求动态赋值x，y周值
+        $.ajax({
+            url: "/onea/query_oneA",
+            type: "post",
+            //data:"CODE"+oneS,
+            dataType: "text",
+            async: false,
+            success: function yan(data) {
 
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-        window.addEventListener("resize",function(){
-            myChart.resize();
-        });
+                if (data == 0) {
+
+                    alert("获取数据失败");
+                } else {
+                    console.log(data)
+                    var ls = eval('(' + data + ')');
+
+                    var listx = [];//创建x轴集合 填装数据
+                    var listy = [];//创建y轴集合 填装数据
+
+                    for (var e in ls) {
+                        //ls[e]就是单个json数据，类似 {"id":1,"longS":12,"nameS":"商超门店","valueS":1200}
+                        //console.log(ls[e]);
+                        var jsons = ls[e];
+                        //jsons['nameS'] 就是取{"id":1,"longS":12,"nameS":"商超门店","valueS":1200}里面的nameS的value值
+                        console.log(jsons['nameS']);
+                        listx.push(jsons['nameS']);//填装x
+
+                        //todo
+                        console.log(jsons['longS']);
+                        listy.push(jsons['longS']);//填装y
+
+                    }
+
+
+                    myChart.setOption({
+                        title: [{
+                            text: '兴趣分布',
+                            left: 'center',
+                            textStyle: {
+                                color: '#fff',
+                                fontSize: '16'
+                            }
+
+                        }],
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b}: {c} ({d}%)",
+                            position: function (p) {   //其中p为当前鼠标的位置
+                                return [p[0] + 10, p[1] - 10];
+                            }
+                        },
+                        legend: {
+                            top: '70%',
+                            itemWidth: 10,
+                            itemHeight: 10,
+                            data: ['汽车', '旅游', '财经', '教育', '软件', '其他'],
+                            textStyle: {
+                                color: 'rgba(255,255,255,.5)',
+                                fontSize: '12',
+                            }
+                        },
+                        series: [
+                            {
+                                name: '兴趣分布',
+                                type: 'pie',
+                                center: ['50%', '42%'],
+                                radius: ['40%', '60%'],
+                                color: ['#065aab', '#066eab', '#0682ab', '#0696ab', '#06a0ab', '#06b4ab', '#06c8ab', '#06dcab', '#06f0ab'],
+                                label: {show: false},
+                                labelLine: {show: false},
+                                data: [
+                                    {value: 2, name: '汽车'},
+                                    {value: 3, name: '旅游'},
+                                    {value: 1, name: '财经'},
+                                    {value: 4, name: '教育'},
+                                    {value: 8, name: '软件'},
+                                    {value: 1, name: '其他'},
+                                ]
+                            }
+                        ]
+                    });
+
+                    window.addEventListener("resize", function () {
+                        myChart.resize();
+                    });
+
+                }
+            }
+        })
     }
-
-
 })
 
 

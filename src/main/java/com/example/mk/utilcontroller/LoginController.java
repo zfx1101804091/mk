@@ -35,4 +35,9 @@ public class LoginController {
         }
         return "fail";
     }
+
+    @RequestMapping("/lgback")
+    public String lgback(HttpServletRequest request){
+       return "login";
+    }
 }

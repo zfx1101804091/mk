@@ -3,7 +3,7 @@
 <mapper namespace="com.example.mk.mapper.OneAMapper">
 
 
-  <select id="queryOneA" resultType="java.lang.String">
+  <select id="queryOneA" resultType="com.example.mk.bean.OneA">
     select * from one_a
 
   </select>

@@ -776,7 +776,24 @@
         });
     }
 
+    function getda(valuec,nameb) {
+      
+        var list=[];
+        
+        for (var i = 0; i < valuec.length; i++) {
+            var json={};
+            //echarts的饼图为json数组，故此处造json数组数据
+            json.value=valuec[i];//极为{value：valuec[i]}
+            json.name=nameb[i];
+            
+            list.push(json);
+            
+        }
+        
+        return list;
+    }
     function echarts_33() {
+        
 
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('fb3'));
@@ -797,24 +814,18 @@
                     console.log(data)
                     var ls = eval('(' + data + ')');
 
-                    var listx = [];//创建x轴集合 填装数据
-                    var listy = [];//创建y轴集合 填装数据
+                    var nameb = [];//创建x轴集合 填装数据
+                    var valuec = [];//创建y轴集合 填装数据
 
                     for (var e in ls) {
-                        //ls[e]就是单个json数据，类似 {"id":1,"longS":12,"nameS":"商超门店","valueS":1200}
-                        //console.log(ls[e]);
+                        
                         var jsons = ls[e];
-                        //jsons['nameS'] 就是取{"id":1,"longS":12,"nameS":"商超门店","valueS":1200}里面的nameS的value值
-                        console.log(jsons['nameS']);
-                        listx.push(jsons['nameS']);//填装x
-
-                        //todo
-                        console.log(jsons['longS']);
-                        listy.push(jsons['longS']);//填装y
+                        nameb.push(jsons['name_b']);
+                        valuec.push(jsons['value_c']);
 
                     }
 
-
+                    //var bb = getda(nameb,valuec);
                     myChart.setOption({
                         title: [{
                             text: '兴趣分布',
@@ -836,7 +847,7 @@
                             top: '70%',
                             itemWidth: 10,
                             itemHeight: 10,
-                            data: ['汽车', '旅游', '财经', '教育', '软件', '其他'],
+                            data: nameb,
                             textStyle: {
                                 color: 'rgba(255,255,255,.5)',
                                 fontSize: '12',
@@ -851,14 +862,16 @@
                                 color: ['#065aab', '#066eab', '#0682ab', '#0696ab', '#06a0ab', '#06b4ab', '#06c8ab', '#06dcab', '#06f0ab'],
                                 label: {show: false},
                                 labelLine: {show: false},
-                                data: [
-                                    {value: 2, name: '汽车'},
-                                    {value: 3, name: '旅游'},
-                                    {value: 1, name: '财经'},
-                                    {value: 4, name: '教育'},
-                                    {value: 8, name: '软件'},
-                                    {value: 1, name: '其他'},
-                                ]
+                           /*     data: [
+                                    {value: valuec[0], name: nameb[0]},
+                                    {value: valuec[1], name: nameb[1]},
+                                    {value: valuec[2], name: nameb[2]},
+                                    {value: valuec[3], name: nameb[3]},
+                                    {value: valuec[4], name: nameb[4]},
+                                    {value: valuec[5], name: nameb[5]},
+                                ]*/
+                           data:getda(valuec,nameb)
+                               
                             }
                         ]
                     });

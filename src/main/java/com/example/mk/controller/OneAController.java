@@ -1,5 +1,7 @@
 package com.example.mk.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.example.mk.bean.OneA;
 import com.example.mk.service.OneAService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,8 +25,8 @@ public class OneAController {
     public String query_oneA(){
 
 
-        List<Map<String,String>> list = oneAService.queryOneA();
+        OneA OneAs = oneAService.queryOneA();
 
-        return list.toString();
+        return JSON.toJSONString(OneAs);
     }
 }

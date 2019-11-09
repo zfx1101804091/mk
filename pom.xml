@@ -125,8 +125,11 @@
                 <configuration>
                     <fork>true</fork>
                 </configuration>
+                
             </plugin>
         </plugins>
+        <!--设置打包名称-->
+        <finalName>mk</finalName>
     </build>
 
 

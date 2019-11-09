@@ -6,7 +6,7 @@
     -->
     
     <!-- 定义日志文件输出位置 -->
-    <property name="logDir" value="/zh/log" />
+    <property name="logDir" value="/home/wudi" />
     <!-- 日志最多保存几天 -->
     <property name="maxHistory" value="7" />
     

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    
+    <!--参考博客：https://www.cnblogs.com/huangtao1927/p/8687012.html
+            可将error，info，debug等级日志别分开打印
+    -->
+    
+    <!-- 定义日志文件输出位置 -->
+    <property name="logDir" value="/zh/log" />
+    <!-- 日志最多保存几天 -->
+    <property name="maxHistory" value="7" />
+
+    <!--输出到控制台-->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <!--此日志appender是为开发使用，只配置最底级别，控制台输出的日志级别是大于或等于此级别的日志信息-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>debug</level>
+        </filter>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="main_log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <!--注销这段为只打印dubug级别日志设置-->
+            <!--<onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>-->
+        </filter>
+        <encoder>
+            <pattern>
+                %d - %msg%n
+            </pattern>
+        </encoder>
+        <!--滚动策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--路径-->
+            <fileNamePattern>${logDir}/main.%d.log</fileNamePattern>
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!--创建日志输出规则-->
+    <appender name="mk_controller" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+        <!-- 对记录事件进行格式化。 -->
+        <encoder>
+            <charset>UTF-8</charset>
+            <Pattern>
+                <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+                %d{yyyy-MM-dd HH:mm:ss.SSS}|%level|%class|%thread|%method|%line|%msg%n
+            </Pattern>
+        </encoder>
+        <!--滚动策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--路径-->
+            <fileNamePattern>${logDir}/mk_controller.%d.log</fileNamePattern>
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+
+
+
+    <!-- 特殊的<logger>元素，是根logger。只有一个level属性，应为已经被命名为"root".
+        level:设置打印级别，大小写无关：TRACE, DEBUG, INFO, WARN, ERROR, ALL 和 OFF，
+              不能设置为INHERITED或者同义词NULL。默认是DEBUG。
+        <root>可以包含零个或多个<appender-ref>元素，标识这个appender将会添加到这个loger。 -->
+    <root level="info">
+        <appender-ref ref="console"></appender-ref>
+        <appender-ref ref="main_log"></appender-ref>
+    </root>
+
+    <!-- 用来设置某一个 包 或者具体的某一个 类 的日志打印级别、以及指定<appender>, 
+        name:用来指定受此logger约束的某一个包或者具体的某一个类。
+        level:用来设置打印级别，大小写无关：TRACE, DEBUG, INFO, WARN, ERROR, ALL 和 OFF，还有一个特俗值INHERITED或者同义词NULL，代表强制执行上级的级别。如果未设置此属性，那么当前loger将会继承上级的级别。 
+        additivity:是否向上级logger传递打印信息。默认是true。(这个logger的上级就是上面的root)
+        <logger>可以包含零个或多个<appender-ref>元素，标识这个appender将会添加到这个logger。-->
+    <logger name="com.example.mk.controller" level="DEBUG" additivity="true">
+        <!--
+            logback.xml配置，指定类输出日志到指定文件
+            调用日志输出规则  给com.example.mk.controller包 等级debug
+        -->
+        <appender-ref ref="mk_controller"/>
+    </logger>
+
+    
+</configuration>

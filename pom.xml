@@ -87,6 +87,33 @@
             <version>3.7</version>
         </dependency>-->
 
+        <!--slfj和logback整合 开始-->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+        <!--slfj和logback整合 结束-->
+        
+        <!--添加lombok插件，此处主要使用@slfj和实体类@getter@data等-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.2</version>
+        </dependency>
+
     </dependencies>
 
     <build>

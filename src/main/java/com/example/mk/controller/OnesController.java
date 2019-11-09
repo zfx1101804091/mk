@@ -3,6 +3,7 @@ package com.example.mk.controller;
 import com.alibaba.fastjson.JSON;
 import com.example.mk.bean.OneS;
 import com.example.mk.mapper.OneSMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Controller
 @RequestMapping("test")
 public class OnesController {
@@ -42,7 +44,7 @@ public class OnesController {
         
         List<OneS> oneS = oneSMapper.selectByExample(null);
 
-        System.out.println("查询所有one_s对象----"+JSON.toJSONString(oneS));
+        log.info("查询所有one_s对象----{}",JSON.toJSONString(oneS));
         return JSON.toJSONString(oneS);
     }
     /*

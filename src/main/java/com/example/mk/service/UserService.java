@@ -1,5 +1,6 @@
 package com.example.mk.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.mk.bean.User;
 
 /**
@@ -9,4 +10,6 @@ import com.example.mk.bean.User;
  */
 public interface UserService {
     User queryName(String login_name, String password,String code);
+
+    int insertLoginMsg(String jsonObject);
 }

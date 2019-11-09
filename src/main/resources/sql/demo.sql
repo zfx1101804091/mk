@@ -10,10 +10,30 @@ Target Server Type    : MYSQL
 Target Server Version : 50724
 File Encoding         : 65001
 
-Date: 2019-11-08 23:43:21
+Date: 2019-11-09 16:05:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for login_log
+-- ----------------------------
+DROP TABLE IF EXISTS `login_log`;
+CREATE TABLE `login_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ip` varchar(255) DEFAULT NULL,
+  `operation` varchar(255) DEFAULT NULL COMMENT '操作系统',
+  `browser` varchar(25) DEFAULT NULL COMMENT '浏览器信息',
+  `editime` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of login_log
+-- ----------------------------
+INSERT INTO `login_log` VALUES ('4', '127.0.0.1', 'Windows 10', 'Chrome', null);
+INSERT INTO `login_log` VALUES ('5', '127.0.0.1', 'Windows 10', 'Chrome', '2019-11-09 16:03:52');
+INSERT INTO `login_log` VALUES ('6', '127.0.0.1', 'Windows 10', 'Chrome', '2019-11-09 16:04:15');
 
 -- ----------------------------
 -- Table structure for one_a
@@ -31,7 +51,7 @@ CREATE TABLE `one_a` (
   `name_n` varchar(255) DEFAULT NULL,
   `value_c` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of one_a

@@ -1,216 +1,152 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Basic Layout - jQuery EasyUI Demo</title>
-    <!--注意jquery核心库要放在easyui核心库前面引入，不然jquery.easyui.min.js中会报错：jQuery is not defined-->
+    <meta charset=utf-8 />
+    <title>JS Bin</title>
+    <script class="jsbin" src="js/jquery.js"></script>
     <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
-    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
-    <script type="text/javascript" src="easyui/jquery.min.js"></script>
-    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <style>
+        article, aside, figure, footer, header, hgroup,
+        menu, nav, section { display: block; }
+        .west{
+            width:200px;
+            padding:10px;
+        }
+        .north{
+            height:100px;
+        }
+    </style>
+    <script>
+        $(function () {
+            //动态菜单数据
+            var treeData = [{
+                text : "菜单",
+                children : [{
+                    text : "一级菜单1",
+                    attributes : {
+                        url : ""
+                    }
+                }, {
+                    text : "一级菜单2",
+                    attributes : {
+                        url : ""
+                    }
+                }, {
+                    text : "一级菜单3",
+                    state : "closed",
+                    children : [{
+                        text : "二级菜单1",
+                        attributes : {
+                            url : ""
+                        }
+                    }, {
+                        text : "二级菜单2",
+                        attributes : {
+                            url : ""
+                        }
+                    }, {
+                        text : "二级菜单3",
+                        attributes : {
+                            url : ""
+                        }
+                    }
+                    ]
+                }
+                ]
+            }
+            ];
+
+            //实例化树形菜单
+            $("#tree").tree({
+                data : treeData,
+                lines : true,
+                onClick : function (node) {
+                    if (node.attributes) {
+                        Open(node.text, node.attributes.url);
+                    }
+                }
+            });
+            //在右边center区域打开菜单，新增tab
+            function Open(text, url) {
+                if ($("#tabs").tabs('exists', text)) {
+                    $('#tabs').tabs('select', text);
+                } else {
+                    $('#tabs').tabs('add', {
+                        title : text,
+                        closable : true,
+                        content : text
+                    });
+                }
+            }
+
+            //绑定tabs的右键菜单
+            $("#tabs").tabs({
+                onContextMenu : function (e, title) {
+                    e.preventDefault();
+                    $('#tabsMenu').menu('show', {
+                        left : e.pageX,
+                        top : e.pageY
+                    }).data("tabTitle", title);
+                }
+            });
+
+            //实例化menu的onClick事件
+            $("#tabsMenu").menu({
+                onClick : function (item) {
+                    CloseTab(this, item.name);
+                }
+            });
+
+            //几个关闭事件的实现
+            function CloseTab(menu, type) {
+                var curTabTitle = $(menu).data("tabTitle");
+                var tabs = $("#tabs");
+
+                if (type === "close") {
+                    tabs.tabs("close", curTabTitle);
+                    return;
+                }
+
+                var allTabs = tabs.tabs("tabs");
+                var closeTabsTitle = [];
+
+                $.each(allTabs, function () {
+                    var opt = $(this).panel("options");
+                    if (opt.closable && opt.title != curTabTitle && type === "Other") {
+                        closeTabsTitle.push(opt.title);
+                    } else if (opt.closable && type === "All") {
+                        closeTabsTitle.push(opt.title);
+                    }
+                });
+
+                for (var i = 0; i < closeTabsTitle.length; i++) {
+                    tabs.tabs("close", closeTabsTitle[i]);
+                }
+            }
+        });
+    </script>
 </head>
 <body class="easyui-layout">
-
-<div id="cc" style="width:100%;height: 100%;">
-    <!-- 顶部 -->
-    <div data-options="region:'north'" style="height:50px;overflow: hidden;border: none; text-align:right">
-        <div class="index-head">
-            <div class="index-head-left" style=" text-align:left">
-                场库平台
-            </div>
-
-            <div class="index-head-right" style="left: 65%">
-                <label style="color:white"> </label>
-                <label style="color:red">【11】</label>
-                &nbsp;
-                <a href="javascript:void(0)" id="mb_personCenter" class="easyui-menubutton"
-                   data-options="menu:'#mm_personCenterMenu'"><span style="color: blue;">【个人中心】</span></a>
-                <div id="mm_personCenterMenu" style="width:150px;">
-                    <div id="1" data-options="iconCls:'icon-save'">账号管理</div>
-                    <div class="menu-sep"></div>
-
-                    <!--  <div id="3" data-options="iconCls:'icon-redo'">交班</div>
-                     <div id="4" data-options="iconCls:'icon-redo'">当前概况</div>
-                      <div class="menu-sep"></div>
-                     <div id="4" data-options="iconCls:'icon-undo'">联系</div>   -->
-                    <div id="5" data-options="iconCls:'icon-help'">关于</div>
-                    <div id="6" data-options="iconCls:'icon-undo'">上传更新文件</div>
-                    <div id="7" data-options="iconCls:'icon-print'">下载系统日志</div>
-                    <!-- VXG测试功能 -->
-                    <div id="index_footer" data-options="region:'south'" style="height:23px;padding: 0px;"
-                         align="right">
-                        <a href="/webpark/vxgPlayerTest.html" src="/webpark/vxgPlayerTest.html">VXG视频功能测试</a>
-                    </div>
-                </div>
-                &nbsp;
-                <a href="/webpark/" onclick="exit()" title="注销">【注销】</a>
-            </div>
-        </div>
-    </div>
-
-    <!-- 底部 -->
-    <div id="index_footer" data-options="region:'south'" style="height:23px;padding: 0px;" align="right">
-        <font>©2015 北京蓝卡科技股份有限公司</font>
-    </div>
-    <!-- 左侧 -->
-    <div data-options="region:'west',collapsible:true,split:true"
-         style="width:206px;height:500px;border:none;background:#6495ED">
-
-        <div class="nav-main">
-            <div class="nav-box">
-            </div>
-            <div class="nav">
-                <ul class="nav-ul">
-                    <!-- <li><a href="#" class="home"><span></span></a></li> -->
-
-                    <li id="index_li_id_0"><a href="#" class="develop"><span><img src="/webpark/img/a12_0.png"
-                                                                                  style="width:50px;height:50px"><br>运行状态<br></span></a>
-                    </li>
-
-
-                    <li id="index_li_id_1"><a href="#" class="wechat"><span><img src="/webpark/img/a12_0.png"
-                                                                                 style="width:50px;height:50px"><br>运营统计<br></span></a>
-                    </li>
-
-
-                    <li id="index_li_id_2"><a href="#" class="case"><span><img src="/webpark/img/a12_0.png"
-                                                                               style="width:50px;height:50px"><br>财务管理<br></span></a>
-                    </li>
-
-
-                    <li id="index_li_id_3"><a href="#" class="news"><span><img src="/webpark/img/a12_0.png"
-                                                                               style="width:50px;height:50px"><br>车辆管理<br></span></a>
-                    </li>
-
-
-                    <li id="index_li_id_4"><a href="#" class="contact"><span><img src="/webpark/img/a12_0.png"
-                                                                                  style="width:50px;height:50px"><br>场库管理<br></span></a>
-                    </li>
-
-
-                    <li id="index_li_id_5"><a href="#" class="contact"><span><img src="/webpark/img/a12_0.png"
-                                                                                  style="width:50px;height:50px"><br>用户管理<br></span></a>
-                    </li>
-
-
-                    <li id="index_li_id_6"><a href="#" class="contact"><span><img src="/webpark/img/a12_0.png"
-                                                                                  style="width:50px;height:50px"><br>系统设置<br></span></a>
-                    </li>
-
-
-                    <li id="index_li_id_7"><a href="#" class="contact"><span><img src="/webpark/img/a12_0.png"
-                                                                                  style="width:50px;height:50px"><br>车位引导<br></span></a>
-                    </li>
-
-
-                </ul>
-
-            </div>
-
-
-        </div>
-
-
-    </div>
-
-    <!-- 右侧 -->
-    <div id="center" data-options="region:'center'">
-        <div id="centertab" class="easyui-tabs" data-options="tabHeight:25,border:false,fit:true">
-            <!-- 首页选项卡 -->
-            <div title="首页" style="">
-                <img id="index_main" src="" width="100%" height="100%"></img>
-            </div>
-        </div>
-    </div>
-
+<div region="north" class="north" title="test">
+    <h1>最简单的左右结构实现，及tab的右键菜单实现，右键查看源码</h1>
 </div>
-
-
-<div id="modifyUserWinInit" title="编辑账号">
-    <div id="modifyUserWindow" style="display:none">
-        <table cellpadding="5" align="center">
-            <tr>
-                <td>登录名称:</td>
-                <td><input class="easyui-textbox" type="text" id="mod_userLoginName" style="width:200px"
-                           name="mod_userLoginName"></input></td>
-            </tr>
-            <tr>
-                <td>请输入原始密码:</td>
-                <td><input class="easyui-textbox" type="password" id="old_userPassword" style="width:200px"
-                           name="old_userPassword"></input></td>
-            </tr>
-            <tr>
-                <td>请输入新建密码:</td>
-                <td><input class="easyui-textbox" type="password" id="mod_userPassword" style="width:200px"
-                           name="mod_userPassword"></input></td>
-            </tr>
-            <tr>
-                <td>请再次输入密码:</td>
-                <td><input class="easyui-textbox" type="password" id="mod_userPassword1" style="width:200px"
-                           name="mod_userPassword1"></input></td>
-            </tr>
-        </table>
-        <div style="text-align:center;padding:20px">
-            <a onclick="modifyUser()" href="javascript:void(0)" class="easyui-linkbutton"
-               data-options="iconCls:'icon-save'">确定</a>
-        </div>
+<div region="center" title="center">
+    <div class="easyui-tabs" fit="true" border="false" id="tabs">
+        <div title="首页"></div>
     </div>
 </div>
-<!--上传脚本文件的window  -->
-<div class="easyui-window" id="win_import" title="文件上传"
-     data-options="iconCls:'icon-save',modal:true,closed:true,left:300,top:200,width:400,height:200,maximizable:false,minimizable:false">
-    <a>上传目的地址:</a><input id="impUrl" class="easyui-textbox" style="width:280px"><br>
-    <a>选择文件:</a><input id="fileName" name="fileName" type="file"><input id="impDr" type="button" value="导入"
-                                                                        onclick="importFile()">
-
+<div region="west" class="west" title="menu">
+    <ul id="tree"></ul>
 </div>
-<!-- 上传脚本输密码的window -->
-<div class="easyui-window" id="win_imp_pas" title="文件上传"
-     data-options="modal:true,closed:true,collapsible:false,minimizable:false,maximizable:false,left:120,top:200,width:600,height:150">
-    <table class="small" align="left" width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
-        <tr>
-            <td class="tbHead" style="width:10%">密码：</td>
-            <td class="tbText" style="width:40%"><input type="text" name="imp_password" id="imp_password"
-                                                        class="easyui-textbox"
-                                                        data-options="required:true,width:'200px',missingMessage:'请输入密码'"
-                                                        value="">
 
-            </td>
-
-        </tr>
-        <tr>
-            <td class="tbCenter" colspan="2">
-                <span style="color:red">需要输入特定密码，如有疑问请联系管理员！！！</span>
-            </td>
-        </tr>
-        <tr>
-            <td class="tbCenter" colspan="2">
-                <a href="javascript:void(0)" id="cog_delete_group" class="easyui-linkbutton" onclick="showImp()">确定</a>
-                &nbsp;&nbsp;
-                <a href="javascript:void(0)" id="cog_close_group" class="easyui-linkbutton" onclick="closeImp()">关闭</a>
-            </td>
-        </tr>
-    </table>
-</div>
-<!--软件版本号的window  -->
-<div class="easyui-window" id="win_bcversion" title="关于AI云无人值守停车场管理系统"
-     data-options="iconCls:'icon-save',modal:true,closed:true,left:300,top:200,width:500,height:200">
-    <table class="small" id="tb_print_CouponCode" align="left" width="100%" border="0" cellpadding="0" cellspacing="1"
-           bgcolor="#CCCCCC">
-        <tr>
-            <td class="td_left">
-                <b>版本号：</b>2019-10-12 10:31:54
-            </td>
-        </tr>
-
-    </table>
-
-</div>
-<div class="easyui-window" id="win_zip_progress" title="打包进度"
-     data-options="iconCls:'icon-save',modal:true,closed:true,left:300,top:200,width:500,height:200">
-    <div style="font-size:20px">webpark.sql进度:<span id="zip_percent_sql" style="color:red;font-size: 20px"></span></div>
-    <div style="font-size:20px">打包进度:<span id="zip_percent" style="color:red;font-size: 20px"></span></div>
-    <div id="zip_progress" class="easyui-progressbar" style=""></div>
+<div id="tabsMenu" class="easyui-menu" style="width:120px;">
+    <div name="close">关闭</div>
+    <div name="Other">关闭其他</div>
+    <div name="All">关闭所有</div>
 </div>
 </body>
 </html>

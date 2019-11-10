@@ -39,62 +39,28 @@ public class LoginController {
         String password = request.getParameter("password");
         String code = request.getParameter("code");
         User users = userService.queryName(login_name, password, code);
-        //登陆信息存库
-        String loginMsg = getLoginMsg(request);
-        int flag = userService.insertLoginMsg(loginMsg);
-        if (flag!=1){
-            try {
-                response.getWriter().write("登陆信息存储异常！");
-            } catch (IOException e) {
-                log.error("登陆日志存储异常---{}",e.getMessage());
-            }
+        
+        int status =0;//登陆状态 0未登录成功；1登陆成功
+        
+        String loginMsg = CommonUtils.getLoginMsg(request);
+        
+        if (users!=null){
+            //登陆信息存库
+            status = 1;
+            int flag = userService.insertLoginMsg(loginMsg,status);
+            log.debug("登陆成功---{}",JSONObject.toJSONString(users));
+           
         }else {
-            log.debug("登陆日志存储成功---{}",loginMsg);
+            log.debug("登陆失败---{}",JSONObject.toJSONString(users));
+            int flag = userService.insertLoginMsg(loginMsg,status);
         }
         
-        log.debug("查询登陆用户信息---{}", JSON.toJSONString(users));
-        
         if (users != null) {
-            return "redirect:/index ";
+            return "redirect:/demo ";
         }
         return "redirect:/login_fail ";
     }
 
-    public String getLoginMsg(HttpServletRequest req) {
-
-        //获取登陆设备ip
-        String ip = req.getHeader("x-forwarded-for");
-
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = req.getHeader("Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = req.getHeader("WL-Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = req.getRemoteAddr();
-        }
-        if (ip.equals("0:0:0:0:0:0:0:1")) {
-            ip = "127.0.0.1";
-        }
-
-        //获取操作系统
-        String operation = System.getProperty("os.name");
-
-        //获取浏览器信息
-        //String browser = req.getHeader("User-Agent");
-        String browser = CommonUtils.checkBrowse(req);
-
-        //获取当前时间
-        String date1 = DateUtil.getNowDate();
-
-        JSONObject msg=new JSONObject();
-        msg.put("ip",ip);
-        msg.put("operation",operation);
-        msg.put("browser",browser);
-        msg.put("editime",date1);
-
-        return msg.toJSONString();
-    }
+    
 
 }

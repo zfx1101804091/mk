@@ -9,7 +9,7 @@
     </select>
     
     <insert id="insertLoginMsg" parameterType="string">
-        insert into login_log values (null,#{ip},#{operation},#{browser},#{editime})
+        insert into login_log values (null,#{ip},#{operation},#{browser},#{status},#{editime})
     </insert>
 
 

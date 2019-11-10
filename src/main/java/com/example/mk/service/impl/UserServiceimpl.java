@@ -25,7 +25,7 @@ public class UserServiceimpl implements UserService {
     }
 
     @Override
-    public int insertLoginMsg(String jsonObject) {
+    public int insertLoginMsg(String jsonObject,int status) {
         JSONObject json = null;
         int flag=0;
         
@@ -36,7 +36,8 @@ public class UserServiceimpl implements UserService {
             String browser =  json.getString("browser");
             String editime = json.getString("editime");
             
-             flag =  userMapper.insertLoginMsg(ip,operation,browser,editime);
+            
+             flag =  userMapper.insertLoginMsg(ip,operation,browser,String.valueOf(status),editime);
         } catch (Exception e) {
             e.printStackTrace();
         }

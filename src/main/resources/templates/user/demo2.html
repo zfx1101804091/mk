@@ -3,11 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Basic Layout - jQuery EasyUI Demo</title>
-    <!--注意jquery核心库要放在easyui核心库前面引入，不然jquery.easyui.min.js中会报错：jQuery is not defined-->
-    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
-    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
-    <script type="text/javascript" src="easyui/jquery.min.js"></script>
-    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+    
 
 
 </head>
@@ -98,12 +94,17 @@
     <div id="index_footer" data-options="region:'south'" style="height:23px;padding: 0px;" align="right">
         <font>©2019 陌上花开娱乐有限公司</font>
     </div>
-    <div data-options="region:'center',title:'项目详情'" id="center">
-        
-        
+    <div region="center" title="center">
+        <div class="easyui-tabs" fit="true" border="false" id="tabs">
+            <div title="首页"></div>
+        </div>
     </div>
 
 
-    
+    <!--注意jquery核心库要放在easyui核心库前面引入，不然jquery.easyui.min.js中会报错：jQuery is not defined-->
+    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
+    <script type="text/javascript" src="easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
 </body>
 </html>

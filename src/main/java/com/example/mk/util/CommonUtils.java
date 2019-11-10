@@ -1,5 +1,7 @@
 package com.example.mk.util;
 
+import com.alibaba.fastjson.JSONObject;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -138,5 +140,44 @@ public class CommonUtils {
         Pattern p = Pattern.compile(regex, Pattern.MULTILINE);
         Matcher m = p.matcher(str);
         return m.find();
+    }
+    
+    
+    /*######################################################################*/
+    public static String getLoginMsg(HttpServletRequest req) {
+
+        //获取登陆设备ip
+        String ip = req.getHeader("x-forwarded-for");
+
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = req.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = req.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = req.getRemoteAddr();
+        }
+        if (ip.equals("0:0:0:0:0:0:0:1")) {
+            ip = "127.0.0.1";
+        }
+
+        //获取操作系统
+        String operation = System.getProperty("os.name");
+
+        //获取浏览器信息
+        //String browser = req.getHeader("User-Agent");
+        String browser = CommonUtils.checkBrowse(req);
+
+        //获取当前时间
+        String date1 = DateUtil.getNowDate();
+
+        JSONObject msg=new JSONObject();
+        msg.put("ip",ip);
+        msg.put("operation",operation);
+        msg.put("browser",browser);
+        msg.put("editime",date1);
+
+        return msg.toJSONString();
     }
 }

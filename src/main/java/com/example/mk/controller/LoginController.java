@@ -34,9 +34,12 @@ public class LoginController {
     private UserService userService;
 
     @RequestMapping("/login")
-    public String login(HttpServletRequest request, HttpServletResponse response) {
-        String login_name = request.getParameter("login_name");
-        String password = request.getParameter("password");
+    public String login(HttpServletRequest request, HttpServletResponse response,User user) {
+        /*String login_name = request.getParameter("login_name");
+        String password = request.getParameter("password");*/
+
+        String login_name = user.getLogin_name();
+        String password = user.getPassword();
         String code = request.getParameter("code");
         User users = userService.queryName(login_name, password, code);
         

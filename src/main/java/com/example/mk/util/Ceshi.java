@@ -25,11 +25,13 @@ public class Ceshi {
 
 // Output: 0000007
 
-      /*  String str = String.format("Hi,%s %s %s", "小超", "是个", "大帅哥");
+        String str = String.format("Hi,%s %s %s", "小超", "是个", "大帅哥");
         System.out.println(str);
 
 
         Date date = new Date();
+        String str1 = String.format("%tH:%tM", date,date);
+        System.out.println("str1---"+str1);
         //c的使用
         System.out.printf("全部日期和时间信息：%tc%n", date);
         //f的使用
@@ -49,44 +51,15 @@ public class Ceshi {
         String operation = "window10";
         String date1 = DateUtil.getNowDate();
         String msg = "{\"ip\":"+ip+",\"operation\":"+operation+",\"browser\":"+browser+",\"editime\":"+date1+"}";
-        System.out.println("msg--"+msg);*/
+        System.out.println("msg--"+msg);
 
 
-        List<String> ipList = getLocalIPList();
+        List<String> ipList = CommonUtils.getLocalIPList();
         for (String s : ipList) {
             System.out.println(s);
         }
 
     }
 
-    /**
-     * IceWee 2013.07.19
-     * 获取本地IP列表（针对多网卡情况）
-     *
-     * @return
-     */
-    public static List<String> getLocalIPList() {
-        List<String> ipList = new ArrayList<String>();
-        try {
-            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
-            NetworkInterface networkInterface;
-            Enumeration<InetAddress> inetAddresses;
-            InetAddress inetAddress;
-            String ip;
-            while (networkInterfaces.hasMoreElements()) {
-                networkInterface = networkInterfaces.nextElement();
-                inetAddresses = networkInterface.getInetAddresses();
-                while (inetAddresses.hasMoreElements()) {
-                    inetAddress = inetAddresses.nextElement();
-                    if (inetAddress != null && inetAddress instanceof Inet4Address) { // IPV4
-                        ip = inetAddress.getHostAddress();
-                        ipList.add(ip);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return ipList;
-    }
+
 }

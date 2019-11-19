@@ -1,13 +1,12 @@
 package com.example.mk.bean.treedata;
 
+import com.example.mk.dto.TreeVO;
 import lombok.Data;
 
 import java.io.Serializable;
 
 @Data
-public class TreeChildren implements Serializable {
-    private int id;
-    private String text;
-    private String iconCls;
+public class TreeChildren extends TreeVO {
+    
     private TreeAttributes attributes;
 }

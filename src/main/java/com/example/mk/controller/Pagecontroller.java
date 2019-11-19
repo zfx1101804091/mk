@@ -52,6 +52,12 @@ public class Pagecontroller {
 
         return "/user/demo2";
     }
+
+    @RequestMapping("/demo3")
+    public String demo3(){
+
+        return "/user/demo3";
+    }
     @RequestMapping("/timeshow")
     public String timeshow(){
 

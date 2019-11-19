@@ -1,8 +1,12 @@
 package com.example.mk.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.mk.bean.User;
+import com.example.mk.bean.treedata.TreeAttributes;
+import com.example.mk.bean.treedata.TreeChildren;
+import com.example.mk.bean.treedata.TreeData;
 import com.example.mk.service.UserService;
 import com.example.mk.util.BrowserType;
 import com.example.mk.util.CommonUtils;
@@ -16,9 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @description:
@@ -64,6 +66,58 @@ public class LoginController {
         return "redirect:/login_fail ";
     }
 
-    
+
+    /**
+     * 动态创建ztree树，并绑定url跳转
+     * @return
+     */
+    @RequestMapping("getTreedata")
+    @ResponseBody
+    public String treedata(){
+
+        List<Map<String,TreeChildren>> list = new ArrayList();
+        List<TreeChildren> tcList = new ArrayList<>();
+        HashMap<String, TreeData> map1 = new HashMap<>();
+        HashMap<String, List<TreeChildren>> map2 = new HashMap<>();
+
+        TreeData treeData1 = new TreeData();
+        TreeChildren treeChildren = new TreeChildren();
+        TreeChildren treeChildren2 = new TreeChildren();
+        TreeAttributes treeAttributes1 = new TreeAttributes();
+        TreeAttributes treeAttributes2 = new TreeAttributes();
+
+        treeChildren.setId(11);
+        treeChildren.setText("目录1-1");
+        treeChildren.setIconCls("icon-page");
+
+        treeAttributes1.setUrl("/demo2");
+        treeChildren.setAttributes(treeAttributes1);
+
+
+        treeChildren2.setId(12);
+        treeChildren2.setText("目录1-2");
+        treeChildren2.setIconCls("icon-page");
+        treeAttributes2.setUrl("/timeshow");
+        treeChildren2.setAttributes(treeAttributes2);
+
+        tcList.add(treeChildren);
+        tcList.add(treeChildren2);
+        //
+        log.debug("map2--{}",tcList.toString());
+
+        treeData1.setId(1);
+        treeData1.setText("目录1");
+        treeData1.setIconCls("icon-page");
+
+        treeData1.setChildren(tcList);
+
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.add(treeData1);
+
+
+        log.debug("trdata----{}",jsonArray);
+
+        return jsonArray.toJSONString();
+    }
 
 }

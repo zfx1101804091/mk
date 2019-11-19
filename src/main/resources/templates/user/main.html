@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<HTML xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>首页面</title>
+    <header th:replace="header::html"></header>
+    <script type="text/javascript" th:src="@{easyui/jquery.min.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{easyui/themes/default/easyui.css}">
+    <script type="text/javascript" th:src="@{easyui/jquery.easyui.min.js}"></script>
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script type="text/javascript" th:src="@{js/main.js}"></script>
+
+
+</head>
+<body>
+<div class="easyui-layout" data-options="fit:true">
+    <div data-options="region:'north',collapsible:false,hideCollapsedContent:false" data-id="head" style="height:45px;overflow:hidden">
+
+    </div>
+    <!-- 左侧菜单 -->
+    <div data-id="leftmenu" style="width:190px;overflow:auto;" data-options="region:'west',split:false,collapsible:false,style:{textAlign:'left'}">
+        <ul id="menutree"></ul>
+    </div>
+    <div data-options="region:'center',split:true"><!--  -->
+        <div id="mainTabs" class="easyui-tabs" data-options="toolPosition:'right',fit:true,border:false">
+            <div title="主页">
+                测试主页
+                <!--<iframe id="frame3d" src="/index" width="100%" height="100%"></iframe>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 以下为tabs右击事件 -->
+<div id="tab-tools" class="easyui-menu" style="width:100px;">
+    <div id="1" data-options="iconCls:'icon-arrow_refresh'">刷新</div>
+    <div class="menu-sep"></div>
+    <div id="2" data-options="iconCls:'icon-cross'">关闭当前标签</div>
+    <div id="3" data-options="iconCls:'icon-cross'">关闭非当前标签</div>
+    <div class="menu-sep"></div>
+    <div id="4" data-options="iconCls:'icon-cross'">关闭左侧标签</div>
+    <div id="5" data-options="iconCls:'icon-cross'">关闭右侧标签</div>
+    <div class="menu-sep"></div>
+    <div id="6" iconCls="icon-cancel">关闭所有标签</div><!-- 也可这样设置图标 -->
+</div>
+
+</body>
+</html>

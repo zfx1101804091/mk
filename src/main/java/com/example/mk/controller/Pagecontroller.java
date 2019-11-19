@@ -63,5 +63,9 @@ public class Pagecontroller {
 
         return "/user/admin";
     }
-   
+    @RequestMapping("/main")
+    public String main(){
+
+        return "/user/main";
+    }
 }

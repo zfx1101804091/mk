@@ -1,32 +1,201 @@
 <!DOCTYPE html>
-<HTML xmlns:th="http://www.thymeleaf.org">
-<HEAD>
-    <TITLE> 后台管理界面 </TITLE>
-    <header th:replace="header::html"></header>
-    <link rel="stylesheet" th:href="@{ztree/css/demo.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{ztree/zTreeStyle/zTreeStyle.css}" type="text/css">
-    <script type="text/javascript" th:src="@{ztree/js/jquery-1.4.4.min.js}"></script>
-    <script type="text/javascript" th:src="@{ztree/js/jquery.ztree.core.js}"></script>
+<html>
+<head>
+    <meta charset=utf-8 />
+    <title>后台管理</title>
+    <script class="jsbin" src="js/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <style>
+        article, aside, figure, footer, header, hgroup,
+        menu, nav, section { display: block; }
+        .west{
+            width:200px;
+            padding:10px;
+        }
+        .north{
+            height:100px;
+        }
+    </style>
+    <script>
+        $(function () {
+            //动态菜单数据
+            var treeData = [{
+                text : "菜单",
+                children : [{
+                    text : "一级菜单1",
+                    attributes : {
+                        url : '/operator'
+                    }
+                }, {
+                    text : "一级菜单2",
+                    attributes : {
+                        url : ""
+                    }
+                }, {
+                    text : "一级菜单3",
+                    state : "closed",
+                    children : [{
+                        text : "二级菜单1",
+                        attributes : {
+                            url : "/timeshow"
+                        }
+                    }, {
+                        text : "二级菜单2",
+                        attributes : {
+                            url : "https://www.baidu.com/"
+                        }
+                    }, {
+                        text : "二级菜单3",
+                        attributes : {
+                            url : ""
+                        }
+                    }
+                    ]
+                }
+                ]
+            }
+            ];
 
-    <SCRIPT LANGUAGE="JavaScript">
-        var zTreeObj;
-        // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
-        var setting = {};
-        // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
-        var zNodes = [
-            {name:"test1", open:true, children:[
-                    {name:"test1_1"}, {name:"test1_2"}]},
-            {name:"test2", open:true, children:[
-                    {name:"test2_1"}, {name:"test2_2"}]}
-        ];
-        $(document).ready(function(){
-            zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+            //实例化树形菜单
+            $("#tree").tree({
+                data : treeData,
+                lines : true,
+                onClick : function (node) {
+                    if (node.attributes) {
+                        Open(node.text, node.attributes.url);
+                    }
+                }
+            });
+            //在右边center区域打开菜单，新增tab
+            //注意事项：这里的href默认只会加载html片段，不会加载js，css等 ，除非页面的js，css写在body里面
+            function Open(text, url) {
+
+                var content = '<iframe scrolling="auto" frameborder="0"  src="'+url+'" style="width:100%;height:100%;"></iframe>';
+                // 添加一个未选中状态的选项卡面板,具体参考Easyui table 选项卡
+                if ($("#tabs").tabs('exists', text)) {
+                    $('#tabs').tabs('select', text);
+                } else {
+                    $('#tabs').tabs('add', {
+                        title : text,
+                        closable : true,
+                        content:content
+                        // content:"<iframe frameborder='no' height='100%' width='100%' src='/timeshow'></iframe>"
+                        /*https://www.jb51.net/article/102294.htm*/
+                    });
+                }
+            }
+
+            //绑定tabs的右键菜单
+            $("#tabs").tabs({
+                onContextMenu : function (e, title) {
+                    e.preventDefault();
+                    $('#tabsMenu').menu('show', {
+                        left : e.pageX,
+                        top : e.pageY
+                    }).data("tabTitle", title);
+                }
+            });
+
+            //实例化menu的onClick事件
+            $("#tabsMenu").menu({
+                onClick : function (item) {
+                    CloseTab(this, item.name);
+                }
+            });
+
+            //几个关闭事件的实现
+            function CloseTab(menu, type) {
+                var curTabTitle = $(menu).data("tabTitle");
+                var tabs = $("#tabs");
+
+                if (type === "close") {
+                    tabs.tabs("close", curTabTitle);
+                    return;
+                }
+
+                var allTabs = tabs.tabs("tabs");
+                var closeTabsTitle = [];
+
+                $.each(allTabs, function () {
+                    var opt = $(this).panel("options");
+                    if (opt.closable && opt.title != curTabTitle && type === "Other") {
+                        closeTabsTitle.push(opt.title);
+                    } else if (opt.closable && type === "All") {
+                        closeTabsTitle.push(opt.title);
+                    }
+                });
+
+                for (var i = 0; i < closeTabsTitle.length; i++) {
+                    tabs.tabs("close", closeTabsTitle[i]);
+                }
+            }
         });
-    </SCRIPT>
-</HEAD>
-<BODY>
-<div>
-    <ul id="treeDemo" class="ztree"></ul>
+
+
+
+    </script>
+</head>
+<body class="easyui-layout">
+<div data-options="region:'north',border:false" style="height:50px;background:#B3DFDA;padding:10px">
+    <div class="index-head">
+       <!-- <font style="text-align: left">
+            <marquee scrollAmount=2 width=200 onmouseover=stop() onmouseout=start()>
+                陌上花开娱乐会所后台管理系统
+            </marquee>
+        </font>-->
+        <div class="index-head-right" style="right: 65%;text-align: right;height: 10px">
+
+
+            <label style="color:white"> </label>
+            <label style="color:red">【11】</label>
+            &nbsp;
+            <a href="javascript:void(0)" id="mb_personCenter" class="easyui-menubutton"
+               data-options="menu:'#mm_personCenterMenu'"><span style="color: blue;">【个人中心】</span></a>
+            <div id="mm_personCenterMenu" style="width:150px;">
+                <div id="1" data-options="iconCls:'icon-save'">账号管理</div>
+                <div class="menu-sep"></div>
+
+                <div id="5" data-options="iconCls:'icon-help'">关于</div>
+                <div id="6" data-options="iconCls:'icon-undo'">上传更新文件</div>
+                <div id="7" data-options="iconCls:'icon-print'">下载系统日志</div>
+                <!-- VXG测试功能 -->
+                <div id="index_footer2" data-options="region:'south'" style="height:23px;padding: 0px;"
+                     align="right">
+                    <a href="/webpark/vxgPlayerTest.html" src="/webpark/vxgPlayerTest.html">VXG视频功能测试</a>
+                </div>
+            </div>
+            &nbsp;
+            <a href="/webpark/" onclick="exit()" title="注销">【注销】</a>
+        </div>
+    </div>
+
 </div>
-</BODY>
-</HTML>
+<div region="center" title="欢迎使用本系统">
+    <div class="easyui-tabs" fit="true" border="false" id="tabs">
+        <div title="首页">
+            <!--<iframe src="/index" style="border:none" scrolling=no width="100%" height="100%"></iframe>-->
+            <iframe id="frame3d" src="/index" width="100%" height="100%"></iframe>
+
+        </div>
+    </div>
+</div>
+<div region="west" class="west" title="功能预览">
+    <ul id="tree"></ul>
+</div>
+<!-- 底部 -->
+<div id="index_footer" data-options="region:'south'" style="height:23px;padding: 0px;" align="right">
+    <font>©2019 陌上花开娱乐有限公司</font>
+</div>
+<div id="tabsMenu" class="easyui-menu" style="width:120px;">
+    <div name="close">关闭</div>
+    <div name="Other">关闭其他</div>
+    <div name="All">关闭所有</div>
+</div>
+
+
+</body>
+</html>

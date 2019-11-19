@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset=utf-8 />
-    <title>JS Bin</title>
+    <title>后台管理</title>
     <script class="jsbin" src="js/jquery.js"></script>
     <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
     <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
@@ -33,7 +33,7 @@
                 }, {
                     text : "一级菜单2",
                     attributes : {
-                        url : "/demo2"
+                        url : ""
                     }
                 }, {
                     text : "一级菜单3",
@@ -73,14 +73,16 @@
             //在右边center区域打开菜单，新增tab 
             //注意事项：这里的href默认只会加载html片段，不会加载js，css等 ，除非页面的js，css写在body里面
             function Open(text, url) {
+
+                var content = '<iframe scrolling="auto" frameborder="0"  src="'+url+'" style="width:100%;height:100%;"></iframe>';
+                // 添加一个未选中状态的选项卡面板,具体参考Easyui table 选项卡
                 if ($("#tabs").tabs('exists', text)) {
                     $('#tabs').tabs('select', text);
                 } else {
                     $('#tabs').tabs('add', {
                         title : text,
                         closable : true,
-                        iconCls:"icon-save",
-                        content:"<iframe frameborder='no' height='100%' width='100%' src='/timeshow'></iframe>"
+                        content:content
                         /*https://www.jb51.net/article/102294.htm*/
                     });
                 }

@@ -74,4 +74,10 @@ public class Pagecontroller {
 
         return "/user/main";
     }
+
+    @RequestMapping("/lay-index")
+    public String layindex(){
+
+        return "/layuidemo/index";
+    }
 }

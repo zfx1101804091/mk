@@ -86,7 +86,7 @@ public class LoginController {
         TreeAttributes treeAttributes1 = new TreeAttributes();
         TreeAttributes treeAttributes2 = new TreeAttributes();
 
-        treeChildren.setId(11);
+        treeChildren.setId("11");
         treeChildren.setText("目录1-1");
         treeChildren.setIconCls("icon-page");
 
@@ -94,7 +94,7 @@ public class LoginController {
         treeChildren.setAttributes(treeAttributes1);
 
 
-        treeChildren2.setId(12);
+        treeChildren2.setId("12");
         treeChildren2.setText("目录1-2");
         treeChildren2.setIconCls("icon-page");
         treeAttributes2.setUrl("/timeshow");
@@ -105,7 +105,7 @@ public class LoginController {
         //
         log.debug("map2--{}",tcList.toString());
 
-        treeData1.setId(1);
+        treeData1.setId("1");
         treeData1.setText("目录1");
         treeData1.setIconCls("icon-page");
 

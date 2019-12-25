@@ -23,7 +23,7 @@ $(function() {
     function openLeftWin(node) {
         var text = node.text;
         var rpurl = node.attributes.url;
-        var content = '<iframe scrolling="auto" frameborder="0"  src="'+rpurl+'" style="width:100%;height:100%;"></iframe>';
+        var content = '<iframe id="ifsrc" scrolling="auto" frameborder="0"  src="'+rpurl+'" style="width:100%;height:100%;"></iframe>';
 
         if($("#mainTabs").tabs("exists", text)) {// 如果已存在，选中
             $("#mainTabs").tabs("select", text);
@@ -38,15 +38,18 @@ $(function() {
     }
 
     /**
-     * 通用刷新tabs方法
+     * 通用刷新tabs方法--右键刷新
      * currentTab 刷新的tabs对象
      */
     function refreshTab(currentTab) {
-        var url = $(currentTab.panel('options')).attr('href');
-        $('#tabs').tabs('update', {
+        var content = $(currentTab.panel('options')).attr('content');
+        
+        //var url = $('#ifsrc').html(iframe).attr('src');//把字符串转为html对象，在调用iframe标签里的src值；
+        
+        $('#mainTabs').tabs('update', {
             tab : currentTab,
             options : {
-                href : url //重新获取目标页面
+                content : content
             }
         });
         currentTab.panel('refresh');//刷新
@@ -84,7 +87,7 @@ $(function() {
         var tablist = $("#mainTabs").tabs('tabs');  //所有的tabs列表
         switch (id){
             case '1' ://刷新
-                RefreshTab(tab);
+                refreshTab(tab);
                 break;
             case '2' ://关闭当前标签
                 $("#mainTabs").tabs("close", index);

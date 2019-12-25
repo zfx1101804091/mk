@@ -1,5 +1,6 @@
 package com.example.mk.util.springutils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StopWatch;
 
 /*
@@ -14,6 +15,8 @@ import org.springframework.util.StopWatch;
     shortSummary()        //获取概要任务信息
     prettyPrint()         //获取详细信息
  */
+
+@Slf4j
 public class SpringTest {
 
     public static void main(String[] args) throws InterruptedException {
@@ -27,8 +30,9 @@ public class SpringTest {
         sw.start("taskName2");
         Thread.sleep(2000);
         sw.stop();
+        log.debug(sw.currentTaskName()+"----"+sw.getTaskCount());
 
-        System.out.println(sw.prettyPrint());
+        //System.out.println(sw.prettyPrint());
 
     }
 }

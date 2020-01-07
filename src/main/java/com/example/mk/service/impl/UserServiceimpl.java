@@ -35,8 +35,8 @@ public class UserServiceimpl implements UserService {
             String operation = json.getString("operation");
             String browser =  json.getString("browser");
             String editime = json.getString("editime");
-            
-            
+
+            System.out.println("ip--"+ip+"operation--"+operation+"browser--"+browser+"editime--"+editime);
              flag =  userMapper.insertLoginMsg(ip,operation,browser,String.valueOf(status),editime);
         } catch (Exception e) {
             e.printStackTrace();

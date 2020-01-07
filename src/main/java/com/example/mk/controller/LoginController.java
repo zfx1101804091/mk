@@ -1,16 +1,13 @@
 package com.example.mk.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.mk.bean.User;
 import com.example.mk.bean.treedata.TreeAttributes;
 import com.example.mk.bean.treedata.TreeChildren;
 import com.example.mk.bean.treedata.TreeData;
+import com.example.mk.common.utils.CommonUtils;
 import com.example.mk.service.UserService;
-import com.example.mk.util.BrowserType;
-import com.example.mk.util.CommonUtils;
-import com.example.mk.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.*;
 
 /**

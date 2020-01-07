@@ -66,6 +66,7 @@
                 lines : true,
                 onClick : function (node) {
                     if (node.attributes) {
+                        console.log(node.attributes);
                         Open(node.text, node.attributes.url);
                     }
                 }

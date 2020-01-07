@@ -1,6 +1,5 @@
 $(function() {
 
-
     /** 左侧menu菜单 * */
     renderLeftMenu();
     function renderLeftMenu() {

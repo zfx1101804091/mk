@@ -31,7 +31,7 @@ import java.nio.charset.Charset;
 @Slf4j
 @RequestMapping("getmap")
 @RestController
-public class SpringTest {
+public class LocalMap {
 
     @RequestMapping("/map")
     public String getmap(HttpServletRequest request) throws IOException {
@@ -86,23 +86,28 @@ public class SpringTest {
      * @throws JSONException
      * @throws IOException
      */
-    public static String getLocalmap(HttpServletRequest request) throws JSONException, IOException {
+    public static String getLocalmap(HttpServletRequest request)  {
         String ip = CommonUtils.getLocalIp(request);
         // 百度地图申请的ak
         String ak = "SIu51KgrZoe31nllgcpXuUZ26UzsRkdX";
         // 这里调用百度的ip定位api服务 详见 http://api.map.baidu.com/lbsapi/cloud/ip-location-api.htm
-        JSONObject json = readJsonFromUrl("http://api.map.baidu.com/location/ip?ip="+ip+"&ak="+ak);
+        JSONObject json = null;
+        try {
+            json = readJsonFromUrl("http://api.map.baidu.com/location/ip?ip="+ip+"&ak="+ak);
 
+            //这里只取出了两个参数，根据自己需求去获取
+            JSONObject obj = (JSONObject) ((JSONObject) json.get("content")).get("address_detail");
+            String province = obj.getString("province");
+            System.out.println(province);
 
-        //这里只取出了两个参数，根据自己需求去获取
-        JSONObject obj = (JSONObject) ((JSONObject) json.get("content")).get("address_detail");
-        String province = obj.getString("province");
-        System.out.println(province);
+            JSONObject obj2 = (JSONObject) json.get("content");
+            String address = obj2.getString("address");
+            System.out.println(address);
+            return address;
+        } catch (IOException e) {
+            return "调用百度地图API异常"+e.getMessage();
+        }
 
-        JSONObject obj2 = (JSONObject) json.get("content");
-        String address = obj2.getString("address");
-        System.out.println(address);
-        return address;
     }
 
 }

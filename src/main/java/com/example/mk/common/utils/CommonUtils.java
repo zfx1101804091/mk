@@ -3,9 +3,11 @@ package com.example.mk.common.utils;
 import com.alibaba.fastjson.JSONObject;
 import com.example.mk.util.BrowserType;
 import com.example.mk.util.DateUtil;
+import com.example.mk.util.springutils.LocalMap;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -161,7 +163,7 @@ public class CommonUtils {
      *
      * @return ip
      */
-    public static String getLoginMsg(HttpServletRequest request) {
+    public static JSONObject getLoginMsg(HttpServletRequest request) {
 
 
         //获取当前ip
@@ -175,15 +177,19 @@ public class CommonUtils {
         String browser = CommonUtils.checkBrowse(request);
 
         //获取当前时间
-        String date1 = DateUtil.getNowDate();
+        String date = DateUtil.getNowDate();
+
+        //根据ip获取当前地理位置
+        String address = LocalMap.getLocalmap(request);
 
         JSONObject msg=new JSONObject();
         msg.put("ip",ip);
         msg.put("operation",operation);
         msg.put("browser",browser);
-        msg.put("editime",date1);
+        msg.put("address",address);
+        msg.put("editime",date);
 
-        return msg.toJSONString();
+        return msg;
     }
 
     /*

@@ -2,6 +2,9 @@ package com.example.mk.service;
 
 import com.example.mk.bean.User;
 
+import java.awt.*;
+import java.util.ArrayList;
+
 /**
  * @description:
  * @author: zheng-fx
@@ -11,4 +14,6 @@ public interface UserService {
     User queryName(String login_name, String password,String code);
 
     int insertLoginMsg(String jsonObject,int status);
+
+    ArrayList<User> list();
 }

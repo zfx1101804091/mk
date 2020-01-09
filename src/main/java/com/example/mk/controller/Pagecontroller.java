@@ -80,4 +80,10 @@ public class Pagecontroller {
 
         return "/layuidemo/index";
     }
+
+    @RequestMapping("/user_list")
+    public String user_list(){
+
+        return "/user/user_list";
+    }
 }

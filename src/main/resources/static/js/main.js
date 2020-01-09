@@ -4,7 +4,6 @@ $(function() {
     renderLeftMenu();
     function renderLeftMenu() {
         $("#menutree").tree({
-            // url : "json/treedata.json",
             url : 'user/getTreedata',
             rootWidth : "184",
             kidWidth : "180",

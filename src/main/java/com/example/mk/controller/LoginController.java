@@ -1,11 +1,9 @@
 package com.example.mk.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.mk.bean.User;
-import com.example.mk.bean.treedata.TreeAttributes;
-import com.example.mk.bean.treedata.TreeChildren;
-import com.example.mk.bean.treedata.TreeData;
 import com.example.mk.common.utils.CommonUtils;
 import com.example.mk.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -57,63 +55,52 @@ public class LoginController {
         }
         
         if (users != null) {
-            return "redirect:/demo ";
+            return "redirect:/admin ";
         }
         return "redirect:/login_fail ";
     }
 
-
-    /**
-     * 动态创建ztree树，并绑定url跳转
-     * @return
-     */
-    @RequestMapping("getTreedata")
+    @RequestMapping("/list")
     @ResponseBody
-    public String treedata(){
+    public String list(){
 
-        List<Map<String,TreeChildren>> list = new ArrayList();
-        List<TreeChildren> tcList = new ArrayList<>();
-        HashMap<String, TreeData> map1 = new HashMap<>();
-        HashMap<String, List<TreeChildren>> map2 = new HashMap<>();
-
-        TreeData treeData1 = new TreeData();
-        TreeChildren treeChildren = new TreeChildren();
-        TreeChildren treeChildren2 = new TreeChildren();
-        TreeAttributes treeAttributes1 = new TreeAttributes();
-        TreeAttributes treeAttributes2 = new TreeAttributes();
-
-        treeChildren.setId("11");
-        treeChildren.setText("目录1-1");
-        treeChildren.setIconCls("icon-page");
-
-        treeAttributes1.setUrl("/demo2");
-        treeChildren.setAttributes(treeAttributes1);
-
-
-        treeChildren2.setId("12");
-        treeChildren2.setText("目录1-2");
-        treeChildren2.setIconCls("icon-page");
-        treeAttributes2.setUrl("/timeshow");
-        treeChildren2.setAttributes(treeAttributes2);
-
-        tcList.add(treeChildren);
-        tcList.add(treeChildren2);
-        //
-        log.debug("map2--{}",tcList.toString());
-
-        treeData1.setId("1");
-        treeData1.setText("目录1");
-        treeData1.setIconCls("icon-page");
-
-        treeData1.setChildren(tcList);
-
-        JSONArray jsonArray = new JSONArray();
-        jsonArray.add(treeData1);
-
-
-        log.debug("trdata----{}",jsonArray);
-
-        return jsonArray.toJSONString();
+        List<User> userList = userService.list();
+        String data = JSON.toJSONString(userList);
+        log.debug(data);
+        return data;
     }
 
+    @RequestMapping("/title")
+    @ResponseBody
+    public String title(){
+         /*
+    * 
+    * CREATE TABLE `user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_id` int(11) DEFAULT NULL,
+  `login_name` varchar(20) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `password` varchar(40) DEFAULT NULL,
+  `state` int(11) DEFAULT '1',
+  `phone` varchar(60) DEFAULT NULL,
+  `code` varchar(6) DEFAULT NULL,
+  `operator_id` int(11) DEFAULT NULL,
+  `editflag` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `login_name` (`login_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
+
+    * */
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id","id");
+        jsonObject.put("role_id","角色ID");
+        jsonObject.put("login_name","登陆名");
+        jsonObject.put("name","昵称");
+        jsonObject.put("password","密码");
+        jsonObject.put("state","状态");
+        jsonObject.put("phone","联系方式");
+        jsonObject.put("operator_id","操作员ID");
+        jsonObject.put("editflag","编辑时间");
+        return "{id,角色ID,登陆名,昵称,密码,状态,联系方式,操作员ID,编辑时间}";
+    }
 }

@@ -9,67 +9,177 @@
     <link rel="stylesheet" type="text/css" th:href="@{ztree/css/demo.css}">
     <script type="text/javascript" th:src="@{js/jquery.js}"></script>
     <script type="text/javascript" th:src="@{easyui/jquery.easyui.min.js}"></script>
-
+    <!--引入ztree样式与文件  -->
+    <link rel="stylesheet" th:href="@{ztree/css/zTreeStyle/zTreeStyle.css}" type="text/css">
+    <script type="text/javascript" th:src="@{ztree/js/jquery.ztree.all.js}"></script>
 </head>
 
 <body>
 
-<!--<div style="margin:20px 0;"></div>-->
-<div class="easyui-layout" style="height: 720px;width: 1530px">
-    <div data-options="region:'north'" style="height: 5%" >
-        金龙洗浴中心管理平台
-    </div>
-    <div id="index_footer" data-options="region:'south'" style="height:23px;padding: 0px;" align="right">
-        <font>©2019 陌上花开娱乐有限公司</font>
-    </div>
-    
-    <div data-options="region:'west',split:true" title="West" style="width: 10%">
-        <ul class="easyui-tree">
-            <li>
-                <span>用户功能页</span>
-                <ul>
-                    <li data-options="state:'open'" style="height: 100px">
-                        
-                        <span><img th:src="@{images/contacts.svg}" style="height: 50px;width: 50px">pthoto</span>
-                        <ul>
-                            <li>
-                                <span>Friend</span>
-                                
-                            </li>
-                            <li>
-                                <span>Wife</span>
-                            </li>
-                            <li>
-                                <span>Company</span>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <span>Program Files</span>
-                        <ul>
-                            <li>Intel</li>
-                            <li>Java</li>
-                            <li>Microsoft Office</li>
-                            <li>Games</li>
-                        </ul>
-                    </li>
-                    <li>index.html</li>
-                    <li>about.html</li>
-                    <li>welcome.html</li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-    <div region="center" title="欢迎使用本系统">
-        <div class="easyui-tabs" fit="true" border="false" id="tabs">
-            <div title="首页">
-                
+<body class="easyui-layout">
+<!-- 使用div元素描述每个区域 -->
+<div title="中国政府管理系统" style="height: 100px" data-options="region:'north'">北部区域</div>
+<div title="系统菜单" style="width: 200px" data-options="region:'west'">
+    <!-- 制作accordion折叠面板 
+        fit:true----自适应(填充父容器)
+    -->
+    <div class="easyui-accordion" data-options="fit:true">
+        <!-- 使用子div表示每个面板 -->
+        <div  title="面板一">
+            <a id="but1" class="easyui-linkbutton">添加一个选项卡</a>
+            <script type="text/javascript">
+                $(function(){
+                    //页面加载完成后，为上面的按钮绑定事件
+                    $("#but1").click(function(){
+                        //判断“系统管理”选项卡是否存在
+                        var e = $("#mytabs").tabs("exists","系统管理");
+                        if(e){
+                            //已经存在，选中就可以
+                            $("#mytabs").tabs("select","系统管理");
+                        }else{
+                            //调用tabs对象的add方法动态添加一个选项卡
+                            $("#mytabs").tabs("add",{
+                                title:'系统管理',
+                                iconCls:'icon-edit',
+                                closable:true,
+                                content:'<iframe frameborder="0" height="100%" width="100%" src="https://www.baidu.com"></iframe>'
+                            });
+                        }
+                    });
+                });
+            </script>
+        </div>
 
-            </div>
+        <!-- 使用子div表示每个面板 -->
+        <div data-options="iconCls:'icon-cut'" title="面板五">
+            <a id="but2" class="easyui-linkbutton">添加一个选项卡</a>
+            <script type="text/javascript">
+                $(function(){
+                    //页面加载完成后，为上面的按钮绑定事件
+                    $("#but2").click(function(){
+                        //判断“系统管理”选项卡是否存在
+                        var e = $("#mytabs").tabs("exists","系统管理");
+                        if(e){
+                            //已经存在，选中就可以
+                            $("#mytabs").tabs("select","系统管理");
+                        }else{
+                            //调用tabs对象的add方法动态添加一个选项卡
+                            $("#mytabs").tabs("add",{
+                                title:'系统管理',
+                                iconCls:'icon-edit',
+                                closable:true,
+                                /* content:'<iframe frameborder="0" height="100%" width="100%" src="https://www.taobao.com"></iframe>', */
+                                content:'<iframe frameborder="0" height="100%" width="100%" src="<%=request.getContextPath()%>/pages/admin/userlist.jsp"></iframe>'
+                            });
+                        }
+                    });
+                });
+            </script>
+        </div>
+
+        <div title="面板二">
+            <!-- 展示ztree效果 :使用标准json数据构造ztree-->
+            <ul id="ztree1" class="ztree"></ul>
+            <script type="text/javascript">
+                $(function(){
+                    //页面加载完成后，执行这段代码----动态创建ztree
+                    var setting = {};
+                    //构造节点数据
+                    var zNodes = [
+                        {"name":"节点一","children":[
+                                {"name":"节点一_1"},
+                                {"name":"节点一_2"}
+                            ]},//每个json对象表示一个节点数据
+                        {"name":"节点二"},
+                        {"name":"节点三"}
+                    ];
+                    //调用API初始化ztree
+                    $.fn.zTree.init($("#ztree1"), setting, zNodes);
+                });
+            </script>
+        </div>
+        <div title="面板三">
+            <!-- 展示ztree效果 :使用简单json数据构造ztree-->
+            <ul id="ztree2" class="ztree"></ul>
+            <script type="text/javascript">
+                $(function(){
+                    //页面加载完成后，执行这段代码----动态创建ztree
+                    var setting2 = {
+                        data: {
+                            simpleData: {
+                                enable: true//使用简单json数据构造ztree节点
+                            }
+                        }
+                    };
+                    //构造节点数据
+                    var zNodes2 = [
+                        {"id":"1","pId":"2","name":"节点一"},//每个json对象表示一个节点数据
+                        {"id":"2","pId":"3","name":"节点二"},
+                        {"id":"3","pId":"0","name":"节点三"}
+                    ];
+                    //调用API初始化ztree
+                    $.fn.zTree.init($("#ztree2"), setting2, zNodes2);
+
+                });
+            </script>
+        </div>
+        <div title="面板四">
+            <!-- 展示ztree效果 :发送ajax请求获取简单json数据构造ztree-->
+            <ul id="ztree3" class="ztree"></ul>
+            <script type="text/javascript">
+                $(function(){
+                    //页面加载完成后，执行这段代码----动态创建ztree
+                    var setting3 = {
+                        data: {
+                            simpleData: {
+                                enable: true//使用简单json数据构造ztree节点
+                            }
+                        },
+                        callback: {
+                            //为ztree节点绑定单击事件
+                            onClick: function(event, treeId, treeNode){
+                                if(treeNode.page != undefined){
+                                    //判断选项卡是否已经存在
+                                    var e = $("#mytabs").tabs("exists",treeNode.name);
+                                    if(e){
+                                        //已经存在，选中
+                                        $("#mytabs").tabs("select",treeNode.name);
+                                    }else{
+                                        //动态添加一个选项卡
+                                        $("#mytabs").tabs("add",{
+                                            title:treeNode.name,
+                                            closable:true,
+                                            content:'<iframe frameborder="0" height="100%" width="100%" src="'+treeNode.page+'"></iframe>'
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    };
+
+                    //发送ajax请求，获取json数据
+                    //jQuery提供 的ajax方法：ajax、post、get、load、getJSON、getScript
+                    var url = "${pageContext.request.contextPath}/json/menu2.json";
+                    $.post(url,{},function(data){
+                        //调用API初始化ztree
+                        $.fn.zTree.init($("#ztree3"), setting3, data);
+                    },'json');
+                });
+            </script>
         </div>
     </div>
 </div>
-
+<div data-options="region:'center'">
+    <!-- 制作一个tabs选项卡面板 -->
+    <div id="mytabs" class="easyui-tabs" data-options="fit:true">
+        <!-- 使用子div表示每个面板 -->
+        <div data-options="closable:true" title="面板一">我是面板一</div>
+        <div data-options="closable:true" title="面板二">2222</div>
+        <div data-options="closable:true" title="面板三">3333</div>
+    </div>
+</div>
+<div style="width: 100px" data-options="region:'east'">东部区域</div>
+<div style="height: 50px" data-options="region:'south'">南部区域</div>
 </body>
 
 </html>

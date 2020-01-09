@@ -7,6 +7,8 @@ import com.example.mk.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 /**
  * @description:
  * @author: zheng-fx
@@ -45,5 +47,10 @@ public class UserServiceimpl implements UserService {
         
         
         return flag;
+    }
+
+    @Override
+    public ArrayList<User> list() {
+        return userMapper.list();
     }
 }

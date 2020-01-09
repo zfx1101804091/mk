@@ -16,13 +16,17 @@
 </head>
 <body>
 <div class="easyui-layout" data-options="fit:true">
+    <!--头部信息-->
     <div data-options="region:'north',collapsible:false,hideCollapsedContent:false" data-id="head" style="height:45px;overflow:hidden">
-
+        <marquee direction="right" scrollamount="10" loop=10>头部信息，待定</marquee>
     </div>
+    
     <!-- 左侧菜单 -->
     <div data-id="leftmenu" style="width:190px;overflow:auto;" data-options="region:'west',split:false,collapsible:false,style:{textAlign:'left'}">
         <ul id="menutree"></ul>
     </div>
+    
+    <!--中心内容-->
     <div data-options="region:'center',split:true"><!--  -->
         <div id="mainTabs" class="easyui-tabs" data-options="toolPosition:'right',fit:true,border:false">
             <div title="主页">

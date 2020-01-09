@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8 />
+    <title>后台管理</title>
+    <script class="admin" src="js/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+<body class="easyui-layout">
+
+<div>
+
+    <table id="dg"></table>
+</div>
+
+<!--
+<table id="table" class="easyui-datagrid" style="width:99.9%;height:90.8%" iconCls="icon-save"  rownumbers="true" pagination="true">
+    <thead>
+    <tr></tr>
+    </thead>
+</table>
+-->
+
+<script>
+
+    $(function() {
+        $('#dg').datagrid({
+            title:'用户表',
+            url: '/user/list',
+            fitColumns:true,
+            columns: [
+                [
+                    {field: 'id', title: '编号', width: 100, hidden: true},
+                    {field: 'role_id', title: '角色ID', width: 200,align: 'center'},
+                    {field: 'login_name', title: '登陆名', width: 100, align: 'center'},
+                    {field: 'name', title: '昵称', width: 100,align: 'center'},
+                    {field: 'password', title: '密码', width: 200,align: 'center'},
+                    {field: 'state', title: '状态', width: 100,align: 'center'},
+                    {field: 'phone', title: '联系方式', width: 200,align: 'center'},
+                    {field: 'editflag', title: '编辑时间', width: 200,align: 'center'},
+                ]
+            ],
+            success: function (data) {
+                console.log(1111111111111);
+                if (data!=null){
+                    for (var i = 0; i <data.length ; i++) {
+                        console.log(data[i].title);
+                        console.log(data[i].id);
+                        console.log(data[i].login_name);
+                        console.log(data[i].name);
+                    }
+                }
+            }
+        });
+    })
+
+    /**
+     *  JS代码
+     * 加载EasyUI表格
+     * 事件触发先加载列名,异步加载数据
+     * @table 表格ID
+     * @params 加载数据后台所需参数
+     */
+    /*var init_table = function (table,params) {
+        //通过ajax请求生成的新的datagrid的列名
+        $.ajax({
+            url: "/user/title", //获取列名后台接口
+            type: "GET",
+            dataType: 'json',
+            data: {table: table},
+            rownumbers: true, //行号
+            pagination: true, //分页控件
+            pageSize: 20,
+            pageList: [10, 20, 30, 50, 100, 150, 200, 300, 500],
+            success: function (data) {
+                //获取表头数据成功后，使用easyUi的datagrid去生成表格
+                $('#' + table).datagrid({
+                    url: "/user/list", //获取数据后台接口
+                    method: "GET",
+                    contentType: "application/json",
+                    columns: data,//外层ajax请求的表头json
+                    queryParams: {params},
+                    rownumbers: true, //行号
+                    pagination: true, //分页控件
+                    pageSize: 20,
+                    pageList: [10, 20, 30, 50],
+                    striped: true,
+                    loadMsg: "正在努力加载数据,表格渲染中...",
+                    onLoadSuccess: function (data) {
+                        console.log(data);
+                        if (data == null) {
+                            //自定义页面信息加载框
+                            msgShow("error", "请求数据为空!", 'warning');
+                        }
+                    },
+                });
+            },
+            error: function (e) {
+                msgShow("error", "请求数据出错!", 'error');
+            }
+        });
+    }*/
+
+    
+</script>
+
+</body>
+</html>

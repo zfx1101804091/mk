@@ -104,7 +104,7 @@
             var M = toDate(oDate.getMinutes());
             var S = toDate(oDate.getSeconds());
             var Y = toDate(oDate.getFullYear());
-            var MO = toDate(parseInt(oDate.getMonth()));
+            var MO = toDate(parseInt(oDate.getMonth()+1));
             var D = toDate(oDate.getDate());
             var t = Y+":"+ MO+":"+D+" "+ H +":"+ M +":"+S;
             document.getElementById('p1').innerHTML = t;

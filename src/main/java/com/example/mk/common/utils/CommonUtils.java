@@ -3,9 +3,11 @@ package com.example.mk.common.utils;
 import com.alibaba.fastjson.JSONObject;
 import com.example.mk.util.BrowserType;
 import com.example.mk.util.DateUtil;
+import com.example.mk.util.springutils.LocalMap;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -161,23 +163,42 @@ public class CommonUtils {
      *
      * @return ip
      */
-    public static String getLoginMsg(HttpServletRequest request) {
+    public static JSONObject getLoginMsg(HttpServletRequest request) {
 
+
+        //获取当前ip
+        String ip = getLocalIp(request);
+
+        //获取操作系统
+        String operation = System.getProperty("os.name");
+
+        //获取浏览器信息
+        //String browser = req.getHeader("User-Agent");
+        String browser = CommonUtils.checkBrowse(request);
+
+        //获取当前时间
+        String date = DateUtil.getNowDate();
+
+        //根据ip获取当前地理位置
+        String address = LocalMap.getLocalmap(request);
+
+        JSONObject msg=new JSONObject();
+        msg.put("ip",ip);
+        msg.put("operation",operation);
+        msg.put("browser",browser);
+        msg.put("address",address);
+        msg.put("editime",date);
+
+        return msg;
+    }
+
+    /*
+    * 获取ip
+    * */
+    public static String getLocalIp(HttpServletRequest request) {
         //获取登陆设备ip
         String ip = request.getHeader("x-forwarded-for");
 
-        /*if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = req.getHeader("Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = req.getHeader("WL-Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = req.getRemoteAddr();
-        }
-        if (ip.equals("0:0:0:0:0:0:0:1")) {
-            ip = "127.0.0.1";
-        }*/
 
         if (ip != null && ip.length() != 0 && !"unknown".equalsIgnoreCase(ip)) {
             // 多次反向代理后会有多个ip值，第一个ip才是真实ip
@@ -213,27 +234,8 @@ public class CommonUtils {
             ip = "127.0.0.1";
         }
         System.out.println("获取客户端ip: " + ip);
-
-
-        //获取操作系统
-        String operation = System.getProperty("os.name");
-
-        //获取浏览器信息
-        //String browser = req.getHeader("User-Agent");
-        String browser = CommonUtils.checkBrowse(request);
-
-        //获取当前时间
-        String date1 = DateUtil.getNowDate();
-
-        JSONObject msg=new JSONObject();
-        msg.put("ip",ip);
-        msg.put("operation",operation);
-        msg.put("browser",browser);
-        msg.put("editime",date1);
-
-        return msg.toJSONString();
+        return ip;
     }
-
 
     /**
      * IceWee 2013.07.19

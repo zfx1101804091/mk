@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:fmt="http://jboss.org/xml/ns/javax/validation/mapping">
+<head>
+    <meta charset="utf-8">
+    <title>测试页面</title>
+    <title>Basic Layout - jQuery EasyUI Demo</title>
+    <link rel="stylesheet" type="text/css" th:href="@{easyui/themes/default/easyui.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{easyui/themes/icon.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{ztree/css/demo.css}">
+    <script type="text/javascript" th:src="@{js/jquery.js}"></script>
+    <script type="text/javascript" th:src="@{easyui/jquery.easyui.min.js}"></script>
+
+</head>
+
+<body>
+<a href="javascript:void(0)" class="easyui-linkbutton" id="exportOutRecordId" onclick="exportOutRecord()" ><fmt:message key="LED.export"/></a>
+<div id="dg_orderRecord_outRecordIndex"></div>
+
+<script>
+    function getOutRecord(){
+        var parkid=$('#sel_outRecordIndex_parkID').combobox('getValue');
+        //var parkid='0';
+        parkid=parkid==''?'0':parkid;
+        var passageid=$('#sel_outRecordIndex_passageID').combobox('getValue');
+        passageid=passageid==''?'0':passageid;
+        var cartypeid=$('#sel_outRecordIndex_carTypeID').combobox('getValue');
+        cartypeid=cartypeid==''?'0':cartypeid;
+        var begin=$('#sel_outRecordIndex_begin').val();
+        var end=$('#sel_outRecordIndex_end').val();
+        var plate=$('#outRecordIndex_plate').textbox('getValue');
+        var department=$('#sel_outRecordIndex_department').combobox('getText');
+
+        if(begin==''||end==''){
+            //showMessage_Center('提示','请先选择时间！',3000);
+            alertMessage('<fmt:message key="window.pop-up.prompt"/>','<fmt:message key="fixed.license.plate.correction.choose.the.time.first"/>');
+            return false;
+        }
+
+
+        try{
+            publicSetFirstPage('#dg_orderRecord_outRecordIndex');
+        }catch(e){
+        }
+
+
+        var minTime=''
+        var maxTime=''
+        if( document.getElementById('showtime').checked){
+            minTime=$('#minTime').numberbox('getValue');
+            maxTime=$('#maxTime').numberbox('getValue');
+        }
+        minTime=minTime==''?'0':minTime;
+        maxTime=maxTime==''?'10000000':maxTime;
+
+
+        var param='?parkid='+parkid+'&passageid='+passageid+'&cartypeid='+cartypeid+'&begin='+begin+'&end='+end+'&plate='+plate+'&minTime='+minTime+'&maxTime='+maxTime+'&department='+department;
+
+        var statPayurl='<%=request.getContextPath()%>/originpass/statistics_query_getOutRec.do'+param;
+        $("#dg_orderRecord_outRecordIndex").datagrid({
+            loadMsg:'<fmt:message key="LED.pop.Loading"/>',
+            width:'98%',
+            rownumbers:true,
+            striped:true,
+            singleSelect:true,
+            pagination:true,
+            pageSize:20,
+            pageList: [10,15,20,50,100,200],
+            url: encodeURI(statPayurl),
+            //toolbar: '#tb_orderRecord_outRecordIndex',
+            frozenColumns:[[
+                {field:'plate',title:'<fmt:message key="monitoring.center.license.plate"/>',width:80,align:"center",
+                    formatter:function(value,row,index){
+                        //tp,id,passageName,matchClassID,passageTypeID,openBarriorTypeID
+                        var orderID=row.orderID;
+                        var payTime=row.payTime;
+                        var inImagePath=row.inImagePath;
+                        var outImagePath=row.outImagePath;
+                        //alert('-----------------state='+state+'------------index='+index);
+                        var e='';
+                        e += '<a href="javascript:void(0)"   onclick="showOutRecDetail(\''+orderID+'\',\''+payTime+'\',\''+inImagePath+'\',\''+outImagePath+'\')"><span style="color:blue">'+value+'</span></a>';
+
+                        return e;
+                    }
+
+
+                },
+                {field:'parkName',title:'<fmt:message key="LED.region"/>',width:100,align:"center"},
+                {field:'carType',title:'<fmt:message key="fee.scheme.setting.vehicle.type"/>',width:80,align:"center"},
+                {field:'carOwnerGroupName',title:'<fmt:message key="display.style.car.type2"/>',width:80,align:"center"},
+
+            ]],
+            columns:[[
+                {field:'department',title:'部门',width:80,align:"center"},
+                {field:'inPassageName',title:'<fmt:message key="entrance"/>',width:80,align:"center"},
+                {field:'inTime',title:'<fmt:message key="fee.scheme.setting.entry.time"/>',width:150,align:"center",
+                    formatter:function(value,row,index){
+                        if(value!=null&&value!=''&&value.length>19){
+                            return value.substring(0,19);
+                        }else{
+                            value=value==null?'':value;
+                            return value;
+                        }
+                    }
+                },
+                {field:'outPassageName',title:'<fmt:message key="exit"/>',width:80,align:"center"},
+                {field:'outTime',title:'<fmt:message key="fee.scheme.setting.exit.time"/>',width:150,align:"center",
+                    formatter:function(value,row,index){
+                        if(value!=null&&value!=''&&value.length>19){
+                            return value.substring(0,19);
+                        }else{
+                            value=value==null?'':value;
+                            return value;
+                        }
+                    }
+                },
+                {field:'stayTime',title:'<fmt:message key="Length.of.stay"/>',width:100,align:"center"},
+
+                {field:'parkCharge',title:'<fmt:message key="parking.receivables"/>',width:80,align:"center"},
+                {field:'onLineCharge',title:'<fmt:message key="online.payment.amount"/>',width:80,align:"center"},
+                {field:'offLineCharge',title:'<fmt:message key="offline.payment.amount"/>',width:80,align:"center"},
+                {field:'couponCharge',title:'<fmt:message key="total.preferential.amount"/>',width:80,align:"center"},
+                /* {field:'realCharge',title:'实收金额',width:80,align:"center"},
+
+                {field:'payType',title:'缴费方式',width:80,align:"center"}, */
+                {field:'payTime',title:'<fmt:message key="settling.time"/>',width:150,align:"center"},
+                {field:'operatorName',title:'<fmt:message key="fixed.license.plate.correction.operator"/>',width:80,align:"center"},
+                {field:'memo',title:'<fmt:message key="parking.management.remarks"/>',width:200,align:"center"}
+
+
+            ]],
+
+
+            /*
+
+                private String  plate;//车牌
+                private String  carType;//车辆类型
+                private String  carOwnerGroupName;//车主(组)分组名称
+                private String  inPassageName;//入口通道名称
+                private String  inTime;//入场时间
+                private String  outPassageName;//出口通道名称
+                private String  outTime;//出场时间
+                private String  stayTime;//停留时间
+                private Integer parkCharge;//停车应收金额
+
+                private Integer onLineCharge;//线上支付金额
+                private Integer offLineCharge;//线下缴费金额
+                private Integer couponCharge;//优惠总金额
+                private Integer realCharge;//实收金额
+
+                private String  payType;//缴费方式
+                private String  payTime;//结算时间
+                private String  operatorName;//操作人员
+
+                private String  inImageName;//入场图片名称
+                private String  inImagePath;//入场图片路径
+                private String  outImageName;//出场图片名称
+                private String  outImagePath;//出场图片路径
+
+                 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            onClickRow:function(index,row){
+                var inImagePath=row.inImagePath;
+                var outImagePath=row.outImagePath;
+                // alert(inImagePath+"|"+outImagePath)
+                showImageName_outRecordIndex(inImagePath,outImagePath);
+            }
+        });
+
+
+        //设置分页控件
+        var p = $('#dg_orderRecord_outRecordIndex').datagrid('getPager');
+        $(p).pagination({
+            pageSize: 20,//每页显示的记录条数，默认为10
+            pageList: [10,15,20,50,100,200],//可以设置每页记录条数的列表
+            beforePageText: '<fmt:message key="display.style.the.first"/>',//页数文本框前显示的汉字
+            afterPageText: '<fmt:message key="plate.management.page"/>'+'    '+'<fmt:message key="plate.management.common"/>'+' {pages} '+'<fmt:message key="plate.management.page"/>',
+            displayMsg: '<fmt:message key="plate.management.current.display"/>'+' {from} - {to} '+'<fmt:message key="plate.management.record"/>'+'   '+'<fmt:message key="plate.management.common"/>'+' {total} '+'<fmt:message key="plate.management.record"/>',
+            /*onBeforeRefresh:function(){
+                $(this).pagination('loading');
+                alert('before refresh');
+                $(this).pagination('loaded');
+            }*/
+        });
+
+        editSubmit(true);
+
+    }
+
+
+    //导出出场记录
+    function exportOutRecord(){
+
+        var parkid='0';
+        parkid=parkid==''?'0':parkid;
+        var passageid=$('#sel_outRecordIndex_passageID').combobox('getValue');
+        passageid=passageid==''?'0':passageid;
+        var cartypeid=$('#sel_outRecordIndex_carTypeID').combobox('getValue');
+        cartypeid=cartypeid==''?'0':cartypeid;
+        var begin=$('#sel_outRecordIndex_begin').val();
+        var end=$('#sel_outRecordIndex_end').val();
+        var plate=$('#outRecordIndex_plate').textbox('getValue');
+
+        var carTypeName=$('#sel_outRecordIndex_carTypeID').combobox('getText');
+        var passageName=$('#sel_outRecordIndex_passageID').combobox('getText');
+        var parkName=$('#sel_outRecordIndex_parkID').combobox('getText');
+        var department=$('#sel_outRecordIndex_department').combobox('getText');
+
+        if(begin==''||end==''){
+            //showMessage_Center('提示','请先选择时间！',3000);
+            alertMessage('<fmt:message key="window.pop-up.prompt"/>','<fmt:message key="fixed.license.plate.correction.choose.the.time.first"/>');
+            return false;
+        }
+
+
+        try{
+            publicSetFirstPage('#dg_orderRecord_outRecordIndex');
+        }catch(e){
+        }
+
+
+        var minTime=''
+        var maxTime=''
+        if( document.getElementById('showtime').checked){
+            minTime=$('#minTime').numberbox('getValue');
+            maxTime=$('#maxTime').numberbox('getValue');
+        }
+        minTime=minTime==''?'0':minTime;
+        maxTime=maxTime==''?'10000000':maxTime;
+
+
+        var param='?parkid='+parkid+'&passageid='+passageid+'&cartypeid='+cartypeid+'&begin='+begin+'&end='+end+'&plate='+plate+'&minTime='+minTime+'&maxTime='+maxTime+'&carTypeName='+carTypeName+'&passageName='+passageName+'&parkName='+parkName+'&department='+department;
+
+        var posturl='<%=request.getContextPath()%>/originpass/statistics_export_outRec.do'+param;
+
+        window.open(encodeURI(posturl));
+    }
+</script>
+
+</body>
+
+</html>

@@ -41,7 +41,7 @@ public class LoginController {
         
         int status =0;//登陆状态 0未登录成功；1登陆成功
         
-        String loginMsg = CommonUtils.getLoginMsg(request);
+        JSONObject loginMsg = CommonUtils.getLoginMsg(request);
         
         if (users!=null){
             //登陆信息存库

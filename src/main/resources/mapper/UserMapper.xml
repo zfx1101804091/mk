@@ -8,9 +8,9 @@
         select * from user where login_name=#{login_name} and password=#{password} and code=#{code}
     </select>
     
-    <insert id="insertLoginMsg" parameterType="string">
+    <insert id="insertLoginMsg" parameterType="java.util.Map">
 
-        insert into login_log values (null,#{ip},#{operation},#{browser},#{status},#{editime})
+        insert into login_log values (null,#{ip},#{operation},#{browser},#{address},#{status},#{editime})
     </insert>
 
 

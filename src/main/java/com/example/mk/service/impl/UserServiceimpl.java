@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+import java.util.Map;
+
 /**
  * @description:
  * @author: zheng-fx
@@ -27,19 +29,18 @@ public class UserServiceimpl implements UserService {
     }
 
     @Override
-    public int insertLoginMsg(String jsonObject,int status) {
+    public int insertLoginMsg(JSONObject jsonObject,int status) {
         JSONObject json = null;
         int flag=0;
         
         try {
-            json = JSONObject.parseObject(jsonObject);
-            String ip=json.getString("ip");
-            String operation = json.getString("operation");
-            String browser =  json.getString("browser");
-            String editime = json.getString("editime");
 
-            System.out.println("ip--"+ip+"operation--"+operation+"browser--"+browser+"editime--"+editime);
-             flag =  userMapper.insertLoginMsg(ip,operation,browser,String.valueOf(status),editime);
+            jsonObject.put("status",String.valueOf(status));
+
+            //json转map
+            Map map = JSON.parseObject(JSON.toJSONString(jsonObject), Map.class);
+
+            flag =  userMapper.insertLoginMsg(map);
         } catch (Exception e) {
             e.printStackTrace();
         }

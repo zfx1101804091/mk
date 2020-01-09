@@ -86,4 +86,10 @@ public class Pagecontroller {
 
         return "/user/user_list";
     }
+
+    @RequestMapping("/showMap")
+    public String showMap(){
+
+        return "/mymap/mmap";
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.mk.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.mk.bean.User;
 import com.example.mk.mapper.UserMapper;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -28,30 +30,20 @@ public class UserServiceimpl implements UserService {
         return users;
     }
 
+
     @Override
-    public int insertLoginMsg(JSONObject jsonObject,int status) {
-        JSONObject json = null;
-        int flag=0;
-        
-        try {
+    public int insertLoginMsg(JSONObject jsonObject, int status) {
 
-            jsonObject.put("status",String.valueOf(status));
+        jsonObject.put("status", String.valueOf(status));
 
-            //json转map
-            Map map = JSON.parseObject(JSON.toJSONString(jsonObject), Map.class);
+        //json转map
+        Map map = JSON.parseObject(JSON.toJSONString(jsonObject), Map.class);
 
-            flag =  userMapper.insertLoginMsg(map);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        
-        
-        return flag;
+        return userMapper.insertLoginMsg(map);
     }
 
     @Override
-    public ArrayList<User> list() {
+    public List<User> list() {
         return userMapper.list();
     }
 }

@@ -23,13 +23,13 @@ import java.util.*;
  */
 @Slf4j
 @Controller
-@RequestMapping("user")
+@RequestMapping("/user")
 public class LoginController {
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/login")
+    @RequestMapping("login")
     public String login(HttpServletRequest request, HttpServletResponse response,User user) {
         /*String login_name = request.getParameter("login_name");
         String password = request.getParameter("password");*/
@@ -40,24 +40,26 @@ public class LoginController {
         User users = userService.queryName(login_name, password, code);
         
         int status =0;//登陆状态 0未登录成功；1登陆成功
+        int flag = 0;
+        JSONObject loginMsg = null;
         
-        JSONObject loginMsg = CommonUtils.getLoginMsg(request);
-        
-        if (users!=null){
-            //登陆信息存库
-            status = 1;
-            int flag = userService.insertLoginMsg(loginMsg,status);
-            log.debug("登陆成功---{}",JSONObject.toJSONString(users));
-           
-        }else {
-            log.debug("登陆失败---{}",JSONObject.toJSONString(users));
-            int flag = userService.insertLoginMsg(loginMsg,status);
+        try {
+            loginMsg = CommonUtils.getLoginMsg(request);
+            if (users!=null){
+                //登陆信息存库
+                status = 1;
+                flag = userService.insertLoginMsg(loginMsg,status);
+                log.debug("登陆成功---{}",JSONObject.toJSONString(users));
+                
+            }
+            return "redirect:/admin";
+        } catch (Exception e) {
+        log.debug("登陆失败---{}",JSONObject.toJSONString(users));
+        log.debug("loginMsg--{}",loginMsg);
+        flag = userService.insertLoginMsg(loginMsg,status);
+        return "redirect:/login_fail";
         }
         
-        if (users != null) {
-            return "redirect:/admin ";
-        }
-        return "redirect:/login_fail ";
     }
 
     @RequestMapping("/list")

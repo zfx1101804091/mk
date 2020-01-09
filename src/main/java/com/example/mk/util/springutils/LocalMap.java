@@ -29,17 +29,8 @@ import java.nio.charset.Charset;
  */
 
 @Slf4j
-@RequestMapping("getmap")
-@RestController
 public class LocalMap {
-
-    @RequestMapping("/map")
-    public String getmap(HttpServletRequest request) throws IOException {
-
-        String localmap = getLocalmap(request);
-        return localmap;
-    }
-
+    
 
         /**
          * 读取
@@ -93,6 +84,11 @@ public class LocalMap {
         // 这里调用百度的ip定位api服务 详见 http://api.map.baidu.com/lbsapi/cloud/ip-location-api.htm
         JSONObject json = null;
         try {
+            
+            if(ip.contains("127.0.0.1")){
+                return "本地调试地址";
+            }
+            
             json = readJsonFromUrl("http://api.map.baidu.com/location/ip?ip="+ip+"&ak="+ak);
 
             //这里只取出了两个参数，根据自己需求去获取

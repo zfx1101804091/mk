@@ -38,58 +38,58 @@ public class Pagecontroller {
     @RequestMapping("/operator")
     public String operator(){
 
-        return "/user/operator";
+        return "user/operator";
     }
 
     @RequestMapping("/demo")
     public String demo(){
 
-        return "/user/demo";
+        return "user/demo";
     }
 
     @RequestMapping("/demo2")
     public String demo2(){
 
-        return "/user/demo2";
+        return "user/demo2";
     }
 
     @RequestMapping("/demo3")
     public String demo3(){
 
-        return "/user/demo3";
+        return "user/demo3";
     }
     @RequestMapping("/timeshow")
     public String timeshow(){
 
-        return "/user/timeshow";
+        return "user/timeshow";
     }
 
     @RequestMapping("/admin")
     public String admin(){
 
-        return "/user/admin";
+        return "user/admin";
     }
     @RequestMapping("/main")
     public String main(){
 
-        return "/user/main";
+        return "user/main";
     }
 
     @RequestMapping("/lay-index")
     public String layindex(){
 
-        return "/layuidemo/index";
+        return "layuidemo/index";
     }
 
     @RequestMapping("/user_list")
     public String user_list(){
 
-        return "/user/user_list";
+        return "user/user_list";
     }
 
     @RequestMapping("/showMap")
     public String showMap(){
 
-        return "/mymap/mmap";
+        return "mymap/mmap";
     }
 }

@@ -102,7 +102,6 @@ public class LocalMap {
 
             JSONObject obj2 = (JSONObject) json.get("content");
             String address = obj2.getString("address");
-            System.out.println(address);
             return address;
         } catch (IOException e) {
             return "调用百度地图API异常"+e.getMessage();

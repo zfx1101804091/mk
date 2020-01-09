@@ -80,4 +80,10 @@ public class Pagecontroller {
 
         return "/layuidemo/index";
     }
+
+    @RequestMapping("/showMap")
+    public String showMap(){
+
+        return "/mymap/mmap";
+    }
 }

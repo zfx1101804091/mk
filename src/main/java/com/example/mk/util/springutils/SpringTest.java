@@ -1,7 +1,19 @@
 package com.example.mk.util.springutils;
 
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
+import com.example.mk.common.utils.CommonUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.StopWatch;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.Charset;
 
 /*
     有时我们在做开发的时候需要记录每个任务执行时间，或者记录一段代码执行时间，最简单的方法就是打印当前时间与执行完时间的差值，
@@ -17,22 +29,80 @@ import org.springframework.util.StopWatch;
  */
 
 @Slf4j
+@RequestMapping("getmap")
+@RestController
 public class SpringTest {
 
-    public static void main(String[] args) throws InterruptedException {
+    @RequestMapping("/map")
+    public String getmap(HttpServletRequest request) throws IOException {
 
-        StopWatch sw = new StopWatch();
-
-        sw.start("起床");
-        Thread.sleep(1000);
-        sw.stop();
-
-        sw.start("taskName2");
-        Thread.sleep(2000);
-        sw.stop();
-        log.debug(sw.currentTaskName()+"----"+sw.getTaskCount());
-
-        //System.out.println(sw.prettyPrint());
-
+        String localmap = getLocalmap(request);
+        return localmap;
     }
+
+
+        /**
+         * 读取
+         *
+         * @param rd
+         * @return
+         * @throws IOException
+         */
+        private static String readAll(Reader rd) throws IOException {
+            StringBuilder sb = new StringBuilder();
+            int cp;
+            while ((cp = rd.read()) != -1) {
+                sb.append((char) cp);
+            }
+            return sb.toString();
+        }
+
+        /**
+         * 创建链接
+         *
+         * @param url
+         * @return
+         * @throws IOException
+         * @throws JSONException
+         */
+        private static JSONObject readJsonFromUrl(String url) throws IOException, JSONException {
+            InputStream is = new URL(url).openStream();
+            try {
+                BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
+                String jsonText = readAll(rd);
+                JSONObject json = JSONObject.parseObject(jsonText);
+                return json;
+            } finally {
+                is.close();
+            }
+        }
+
+
+    /**
+     * 百度获取城市信息
+     *
+     * @param
+     * @return
+     * @throws JSONException
+     * @throws IOException
+     */
+    public static String getLocalmap(HttpServletRequest request) throws JSONException, IOException {
+        String ip = CommonUtils.getLocalIp(request);
+        // 百度地图申请的ak
+        String ak = "SIu51KgrZoe31nllgcpXuUZ26UzsRkdX";
+        // 这里调用百度的ip定位api服务 详见 http://api.map.baidu.com/lbsapi/cloud/ip-location-api.htm
+        JSONObject json = readJsonFromUrl("http://api.map.baidu.com/location/ip?ip="+ip+"&ak="+ak);
+
+
+        //这里只取出了两个参数，根据自己需求去获取
+        JSONObject obj = (JSONObject) ((JSONObject) json.get("content")).get("address_detail");
+        String province = obj.getString("province");
+        System.out.println(province);
+
+        JSONObject obj2 = (JSONObject) json.get("content");
+        String address = obj2.getString("address");
+        System.out.println(address);
+        return address;
+    }
+
 }
